@@ -1,0 +1,4 @@
+#ifndef HEADQUARTER_H
+#define HEADQUARTER_H
+
+#endif // HEADQUARTER_H
