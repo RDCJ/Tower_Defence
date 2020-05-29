@@ -2,6 +2,15 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QImage>
+#include <QPainter>
+#include <QTimer>
+
+#include "Chapter.h"
+#include "Object.h"
+#include "Monster.h"
+#include "Tower.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,11 +20,17 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    public:
+        explicit MainWindow(QWidget *parent = nullptr);
+        ~MainWindow();
+        void paintEvent(QPaintEvent *);
 
-private:
-    Ui::MainWindow *ui;
+    protected slots:
+        void move();
+
+    private:
+        Ui::MainWindow *ui;
+        Chapter _chapter;
+        QTimer *timer;
 };
 #endif // MAINWINDOW_H

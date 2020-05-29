@@ -1,2 +1,6 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/image">
+        <file>Icon Set.png</file>
+        <file>raw map.png</file>
+    </qresource>
+</RCC>

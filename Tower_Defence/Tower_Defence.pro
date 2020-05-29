@@ -16,10 +16,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Chapter.cpp \
+    Headquarter.cpp \
+    Icon.cpp \
+    Monster.cpp \
+    Object.cpp \
+    Tower.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    Chapter.h \
+    Headquarter.h \
+    Icon.h \
+    Monster.h \
+    Object.h \
+    Tower.h \
     mainwindow.h
 
 FORMS += \
@@ -29,3 +41,10 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    Icon Set.png \
+    Icon Set.png
+
+RESOURCES += \
+    game.qrc
