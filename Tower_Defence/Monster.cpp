@@ -3,24 +3,15 @@
 Monster::Monster(string type) : Object(type)
 {
     this->_hp = 100;
+    this->_pos = 0;
 }
 
-void Monster::move(int direction)
+void Monster::move(Road r)
 {
-    //1, 2, 3, 4: 上 下 左 右
-    switch (direction)
+    if (this->_pos < r.getXlist().size())
     {
-        case 1:
-            this->_y--;
-            break;
-        case 2:
-            this->_y++;
-            break;
-        case 3:
-            this->_x--;
-            break;
-        case 4:
-            this->_x++;
-            break;
+        this->_pos++;
+        this->_x = r.getXlist()[this->_pos];
+        this->_y = r.getYlist()[this->_pos];
     }
 }

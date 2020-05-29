@@ -21,6 +21,7 @@ SOURCES += \
     Icon.cpp \
     Monster.cpp \
     Object.cpp \
+    Road.cpp \
     Tower.cpp \
     main.cpp \
     mainwindow.cpp
@@ -31,6 +32,7 @@ HEADERS += \
     Icon.h \
     Monster.h \
     Object.h \
+    Road.h \
     Tower.h \
     mainwindow.h
 
