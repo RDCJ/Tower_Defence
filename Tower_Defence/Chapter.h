@@ -13,9 +13,11 @@ class Chapter
 {
     public:
         Chapter() : hd("headquarter") {};
-        void initChapter();
+        void initChapter(int k);
         void show(QPainter *painter);
         void monster_move();
+        void check_monster();
+        void tower_detect();
 
     protected:
         QImage map_pic;//地图大小：13 * 8

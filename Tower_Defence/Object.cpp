@@ -1,4 +1,5 @@
 #include "Object.h"
+#include <cmath>
 
 Object::Object(string type) : _ic(Icon::Icon_Set.find(type)->second)
 {
@@ -12,4 +13,11 @@ void Object::show(QPainter *painter)
 {
     double GS = 74;
     painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
+}
+
+double dist(Object p1, Object p2)
+{
+    int xx = p1.getX() - p2.getX();
+    int yy = p1.getY() - p2.getY();
+    return sqrt(xx*xx + yy*yy);
 }

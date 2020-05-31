@@ -20,8 +20,7 @@ class Object
         int getHeight() const {return this->_ic.getHeight();};
         int getWidth() const {return this->_ic.getWidth();};
         string getType() const {return this->_ic.getType();};
-
-
+        friend double dist(Object p1, Object p2);
     protected:
         int _x, _y;//在画面中的位置
         QImage _pic;//图片

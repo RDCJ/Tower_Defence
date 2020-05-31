@@ -9,11 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->_chapter.initChapter();
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
-    timer->start(50);
-    timer->setInterval(500);
 }
 
 MainWindow::~MainWindow()
@@ -34,6 +31,15 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::move()
 {
     this->_chapter.monster_move();
+    this->_chapter.tower_detect();
+    this->_chapter.check_monster();
     this->repaint();
 }
 
+
+void MainWindow::on_Start_clicked()
+{
+    this->_chapter.initChapter(1);
+    timer->start(400);
+    timer->setInterval(400);
+}

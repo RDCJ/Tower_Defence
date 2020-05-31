@@ -28,7 +28,10 @@ class MainWindow : public QMainWindow
     protected slots:
         void move();
 
-    private:
+private slots:
+        void on_Start_clicked();
+
+private:
         Ui::MainWindow *ui;
         Chapter _chapter;
         QTimer *timer;
