@@ -11,19 +11,22 @@ Tower::Tower(string type) : Object(type)
 void Tower::show(QPainter *painter)
 {
     double deltaX, deltaY;
-    if (this->getTarget() != NULL)
+    if (this->getTarget() != NULL)//更新角度
     {
         deltaX = (*this->_target).getX() - this->getX();
         deltaY = (*this->_target).getY() - this->getY();
-        this->_angle = atan( deltaY/deltaX );
+        this->_angle = atan( deltaY/deltaX ) * 180 / 3.1415 + 90;
+        if (deltaX < 0) this->_angle += 180;
     }
-   // double GS = 74;
+
+    double GS = 74;
     painter->resetTransform();
-   //painter->translate(this->_x * GS , this->_y * GS );
-    painter->translate(40, 40);
-    painter->rotate(_angle + 90);
-    painter->translate(-40, -40);
-    //painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
-    painter->drawImage(0, 0, this->_pic);
+    double centerX = this->_x * GS + this->getWidth() * Icon::Grid_Size/2;
+    double centerY = this->_y * GS + this->getHeight() * Icon::Grid_Size/2;
+    //旋转坐标系并绘制
+    painter->translate(centerX, centerY);
+    painter->rotate(_angle);
+    painter->translate(-centerX, -centerY);
+    painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
     painter->resetTransform();
 }

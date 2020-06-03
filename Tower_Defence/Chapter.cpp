@@ -14,8 +14,8 @@ void Chapter::initChapter(int k)
     monster1.setY(this->_road.getYlist()[0]);
 
     Tower tower1("tower");
-    tower1.setX(0);
-    tower1.setY(0);
+    tower1.setX(10);
+    tower1.setY(6);
 
     this->monster_list.push_back(monster1);
     this->tower_list.push_back(tower1);
@@ -78,11 +78,11 @@ void Chapter::tower_detect()
     {
         if ((*i).getTarget() == NULL)
         {
-            double mindist = 10000;
+            double max_range = 10000;
             for (vector<Monster>::iterator j = monster_list.begin(); j != monster_list.end(); j++)
-                if (dist(*i, *j) < mindist)
+                if (dist(*i, *j) < max_range)
                 {
-                    mindist = dist(*i, *j);
+                    max_range = dist(*i, *j);
                     (*i).set_target(&(*j));
                 }
          }
