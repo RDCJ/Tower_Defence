@@ -11,16 +11,17 @@ class Icon
         static map<string, Icon> Icon_Set;
         static Icon findIcon(string type);
 
-        Icon(string type, int x, int y, int w, int h);
+        Icon(string type, int x, int y, double w, double h);
         int getScrX() const {return _scrX;};
         int getScrY() const {return _scrY;};
-        int getHeight() const {return _height;};
-        int getWidth() const {return _width;};
+        double getHeight() const {return _height;};
+        double getWidth() const {return _width;};
         string getType() const {return this->_typeName;};
 
     protected:
         string _typeName;
-        int _height, _width, _scrX, _scrY;
+        int _scrX, _scrY;
+        double _height, _width;
 };
 
 #endif // ICON_H

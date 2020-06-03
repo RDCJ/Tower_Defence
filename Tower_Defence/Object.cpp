@@ -17,7 +17,7 @@ void Object::show(QPainter *painter)
 
 double dist(Object p1, Object p2)
 {
-    int xx = p1.getX() - p2.getX();
-    int yy = p1.getY() - p2.getY();
+    double xx = p1.getX() - p2.getX();
+    double yy = p1.getY() - p2.getY();
     return sqrt(xx*xx + yy*yy);
 }

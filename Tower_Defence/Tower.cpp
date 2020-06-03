@@ -2,6 +2,9 @@
 #include <cmath>
 using namespace std;
 
+int Tower::max_range = 5;
+int Tower::tATK = 10;
+
 Tower::Tower(string type) : Object(type)
 {
     this->_target = NULL;
@@ -29,4 +32,16 @@ void Tower::show(QPainter *painter)
     painter->translate(-centerX, -centerY);
     painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
     painter->resetTransform();
+
+    for (vector<Bullet>::iterator it = bullet_list.begin(); it != bullet_list.end(); it++) (*it).show(painter);
+
+}
+
+void Tower::shoot()
+{
+    if (this->_target != NULL)
+    {
+        Bullet new_bullet("bullet", this->_x, this->_y, this->_target);
+        this->bullet_list.push_back(new_bullet);
+    }
 }

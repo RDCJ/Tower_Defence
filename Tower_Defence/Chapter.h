@@ -8,6 +8,7 @@
 #include "Tower.h"
 #include "Road.h"
 #include "Headquarter.h"
+#include "Bullet.h"
 
 class Chapter
 {
@@ -18,10 +19,12 @@ class Chapter
         void monster_move();
         void check_monster();
         void tower_detect();
+        void tower_shoot();
+        void bullet_move();
 
     protected:
         QImage map_pic;//地图大小：13 * 8
-        Headquarter hd;
+        Headquarter hd;//基地
         Road _road;
         vector<Monster> monster_list;
         vector<Tower> tower_list;

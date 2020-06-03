@@ -32,6 +32,8 @@ void MainWindow::move()
 {
     this->_chapter.monster_move();
     this->_chapter.tower_detect();
+    this->_chapter.tower_shoot();
+    this->_chapter.bullet_move();
     this->_chapter.check_monster();
     this->repaint();
 }
@@ -40,6 +42,6 @@ void MainWindow::move()
 void MainWindow::on_Start_clicked()
 {
     this->_chapter.initChapter(1);
-    timer->start(400);
-    timer->setInterval(400);
+    timer->start(200);
+    timer->setInterval(200);
 }
