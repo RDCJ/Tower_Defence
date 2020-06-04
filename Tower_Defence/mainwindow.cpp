@@ -42,6 +42,6 @@ void MainWindow::move()
 void MainWindow::on_Start_clicked()
 {
     this->_chapter.initChapter(1);
-    timer->start(200);
-    timer->setInterval(200);
+    timer->start(100);
+    timer->setInterval(30);
 }

@@ -1,7 +1,7 @@
 #include "Monster.h"
 #include <cmath>
 int Monster::mATK = 10;
-double Monster::mSPEED = 1;
+double Monster::mSPEED = 0.1;
 
 Monster::Monster(string type) : Object(type)
 {

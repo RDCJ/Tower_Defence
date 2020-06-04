@@ -11,6 +11,12 @@ Tower::Tower(string type) : Object(type)
     _angle = 0;
 }
 
+void Tower::set_target(Monster * t)
+{
+    this->_target = t;
+    if (t != NULL) this->_start = clock();
+}
+
 void Tower::show(QPainter *painter)
 {
     double deltaX, deltaY;
@@ -41,7 +47,13 @@ void Tower::shoot()
 {
     if (this->_target != NULL)
     {
-        Bullet new_bullet("bullet", this->_x, this->_y, this->_target);
-        this->bullet_list.push_back(new_bullet);
+        this->_stop = clock();
+        double dur = ((double)(this->_stop - this->_start)) / CLK_TCK;
+        if (dur >=0.5)
+        {
+            Bullet new_bullet("bullet", this->_x, this->_y, this->_target);
+            this->bullet_list.push_back(new_bullet);
+            this->_start = clock();
+        }
     }
 }
