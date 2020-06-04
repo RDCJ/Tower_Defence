@@ -13,21 +13,23 @@
 class Chapter
 {
     public:
-        Chapter() : hd("headquarter") {};
+        Chapter() : hd("headquarter") {_status = 0;};
         void initChapter(int k);
-        void show(QPainter *painter);
+        void show(QPainter *painter, bool mouse_flag, double mx, double my);
         void monster_move();
         void check_monster();
         void tower_detect();
         void tower_shoot();
         void bullet_move();
+        void createTower(double x, double y);
 
     protected:
-        QImage map_pic;//地图大小：13 * 8
+        QImage map_pic, tower_pic;//地图大小：13 * 8
         Headquarter hd;//基地
         Road _road;
         vector<Monster> monster_list;
         vector<Tower> tower_list;
+        int _status;//记录游戏状态 (0:未开始  1:成功  -1:失败  2:进行中)
 };
 
 #endif // CHAPTER_H

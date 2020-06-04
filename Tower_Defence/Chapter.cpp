@@ -3,6 +3,7 @@
 
 void Chapter::initChapter(int k)
 {
+    this->_status = 2;
     this->_road.initRoad();
     int r_size = this->_road.getXlist().size();
 
@@ -13,29 +14,37 @@ void Chapter::initChapter(int k)
     monster1.setX(this->_road.getXlist()[0]);
     monster1.setY(this->_road.getYlist()[0]);
 
-    Tower tower1("tower");
-    tower1.setX(10);
-    tower1.setY(6);
-
     this->monster_list.push_back(monster1);
-    this->tower_list.push_back(tower1);
 
+    int GS = Icon::Grid_Size;
     this->map_pic.load(":/image/raw map.png");
+    tower_pic.load(":/image/Icon Set.png");
+    tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
 }
 
-void Chapter::show(QPainter *painter)
+void Chapter::createTower(double x, double y)
 {
-    int m_size = this->monster_list.size();
-    int t_size = this->tower_list.size();
+    Tower newTower("tower");
+    newTower.setX(x/74);
+    newTower.setY(y/74);
+    this->tower_list.push_back(newTower);
+}
 
-    painter->drawImage(0, 0, this->map_pic);
+void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
+{
+    if (this->_status == 2)
+    {
+        painter->drawImage(0, 0, map_pic);
+        painter->drawImage(0, 0, tower_pic);
+        this->hd.show(painter);
 
-    this->hd.show(painter);
+        for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
+            (*itM).show(painter);
+        for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
+            (*itT).show(painter);
 
-    for (int i=0; i<m_size; i++)
-        this->monster_list[i].show(painter);
-    for (int i=0; i<t_size; i++)
-        this->tower_list[i].show(painter);
+        if (mouse_flag == true) painter->drawImage(mx, my, tower_pic);
+    }
 }
 
 void Chapter::monster_move()
@@ -62,8 +71,8 @@ void Chapter::check_monster()
                 if ((*itT).getTarget() == &(*itM)) (*itT).set_target(NULL);
                 for (vector<Bullet>::iterator itB = (*itT).getBlist()->begin(); itB != (*itT).getBlist()->end(); itB++)//itB遍历所有属于itT的子弹
                     if ((*itB).getTarget() == &(*itM)) (*itB).set_target(NULL);
-                itM = monster_list.erase(itM);
             }
+            itM = monster_list.erase(itM);
         }
         else itM++;
     }

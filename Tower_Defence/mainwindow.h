@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QTimer>
+#include <QMouseEvent>
 
 #include "Chapter.h"
 #include "Object.h"
@@ -24,6 +25,9 @@ class MainWindow : public QMainWindow
         explicit MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
         void paintEvent(QPaintEvent *);
+        void mousePressEvent(QMouseEvent *e);
+        void mouseMoveEvent(QMouseEvent *e);
+        void mouseReleaseEvent(QMouseEvent *e);
 
     protected slots:
         void move();
@@ -35,5 +39,7 @@ private:
         Ui::MainWindow *ui;
         Chapter _chapter;
         QTimer *timer;
+        bool buttonMove;
+        double mouse_x, mouse_y;
 };
 #endif // MAINWINDOW_H
