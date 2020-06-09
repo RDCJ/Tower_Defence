@@ -3,4 +3,7 @@
         <file>Icon Set.png</file>
         <file>raw map.png</file>
     </qresource>
+    <qresource prefix="/chapter">
+        <file>Chapter1.ini</file>
+    </qresource>
 </RCC>

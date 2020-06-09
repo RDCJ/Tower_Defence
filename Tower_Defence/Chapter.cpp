@@ -1,26 +1,43 @@
 #include "Chapter.h"
 #include "Object.h"
 
+//vector迭代器命名规则：itT指向防御塔, itM指向怪物, itB指向子弹
+
 void Chapter::initChapter(int k)
 {
-    this->_status = 2;
-    this->_road.initRoad();
-    int r_size = this->_road.getXlist().size();
+    //string file_name = ":/Chapter" + to_string(k) + ".ini";
+    ifstream init_file;
+    init_file.open("F://Tower_Defence//Tower_Defence//Chapter1.ini", ios::in);
+    //读取路径信息
+    int n;
+    init_file>>n;
+    int xl[n], yl[n];
+    for (int i=0; i<n; i++) init_file >>xl[i] >>yl[i];
+    this->_road.initRoad(n, xl, yl);
+    //读取怪物信息
+    init_file>>monster_num;
+    for (int i=0; i<monster_num; i++)
+    {
+        int t;
+        init_file >>t;
+        Monster new_monster("monster", _road.getXlist()[0], _road.getYlist()[0], t);
+        this->monster_list.push_back(new_monster);
+    }
+    init_file.close();
 
+    this->_start = clock();
+    this->_status = 2;
+    //设置基地位置
+    int r_size = this->_road.getXlist().size();
     this->hd.setX(this->_road.getXlist()[r_size-1]);
     this->hd.setY(this->_road.getYlist()[r_size-1]);
-
-    Monster monster1("monster");
-    monster1.setX(this->_road.getXlist()[0]);
-    monster1.setY(this->_road.getYlist()[0]);
-
-    this->monster_list.push_back(monster1);
 
     int GS = Icon::Grid_Size;
     this->map_pic.load(":/image/raw map.png");
     tower_pic.load(":/image/Icon Set.png");
     tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
 }
+
 
 void Chapter::createTower(double x, double y)
 {
@@ -29,6 +46,7 @@ void Chapter::createTower(double x, double y)
     newTower.setY(y/74);
     this->tower_list.push_back(newTower);
 }
+
 
 void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
 {
@@ -43,62 +61,81 @@ void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
         for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
             (*itT).show(painter);
 
-        if (mouse_flag == true) painter->drawImage(mx, my, tower_pic);
+        if (mouse_flag) painter->drawImage(mx, my, tower_pic);
+    }
+    else if (this->_status == -1) GameOver(painter);
+    else if (this->_status == 1) Success(painter);
+}
+
+
+void Chapter::place_monster()
+{
+    _stop = clock();
+    double dur = ((double)(_stop - _start)) / CLK_TCK;
+    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
+    {
+        if ((*itM).ifPlaced()) continue;
+        if ( abs(dur - (*itM).getST()) < 0.1) (*itM).place();
     }
 }
+
 
 void Chapter::monster_move()
 {
-    int m_size = this->monster_list.size();
-    for (int i=0;i<m_size;i++)
-        this->monster_list[i].move(this->_road);
+    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++ )
+        (*itM).move(this->_road);
 }
+
 
 void Chapter::check_monster()
 {
-    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); )//itM遍历所有怪物
-    {
-        bool flag1 = dist((*itM), this->hd) < 0.7;//判断怪物是否到达基地
-        bool flag2 = ((*itM).getHp() <= 0);//判断怪物血量是否为0
-
-        if (flag1) this->hd.be_attacked((*itM).mATK);//怪物到达基地则基地的生命值减少
-
-        if (flag1 || flag2)
+    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)//itM遍历所有怪物
+        if ( (*itM).ifPlaced() && (*itM).alive() )
         {
-            for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)//itT遍历所有防御塔
+            bool flag1 = dist((*itM), this->hd) < 0.7;//判断怪物是否到达基地
+            bool flag2 = (*itM).getHp() <= 0;//判断怪物血量是否为0
+
+            if (flag1) this->hd.be_attacked((*itM).mATK);//怪物到达基地则基地的生命值减少
+
+            if (flag1 || flag2)
             {
-                //将把这只怪物作为目标的防御塔的target清零
-                if ((*itT).getTarget() == &(*itM)) (*itT).set_target(NULL);
-                for (vector<Bullet>::iterator itB = (*itT).getBlist()->begin(); itB != (*itT).getBlist()->end(); itB++)//itB遍历所有属于itT的子弹
-                    if ((*itB).getTarget() == &(*itM)) (*itB).set_target(NULL);
+                (*itM).dead();
+                for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)//itT遍历所有防御塔
+                {
+                    //将把这只怪物作为目标的防御塔的target清零
+                    if ((*itT).getTarget() == &(*itM)) (*itT).set_target(NULL);
+                    for (vector<Bullet>::iterator itB = (*itT).getBlist()->begin(); itB != (*itT).getBlist()->end(); itB++)//itB遍历所有属于itT的子弹
+                        if ((*itB).getTarget() == &(*itM)) (*itB).set_target(NULL);
+                }
             }
-            itM = monster_list.erase(itM);
         }
-        else itM++;
-    }
 }
+
 
 void Chapter::tower_detect()
 {
-    for (vector<Tower>::iterator i = tower_list.begin(); i != tower_list.end(); i++)
+    for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
     {
-        if ((*i).getTarget() == NULL)
+        if ( (*itT).getTarget() != NULL && dist(*itT, *(*itT).getTarget()) > Tower::max_range )
+            (*itT).set_target(NULL);
+        if ((*itT).getTarget() == NULL)
         {
             double mindist = 1000;
-            for (vector<Monster>::iterator j = monster_list.begin(); j != monster_list.end(); j++)
-                if (dist(*i, *j) < mindist && dist(*i, *j) <= Tower::max_range)
+            Monster *p = NULL;
+            for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
+                if ((*itM).ifPlaced() && (*itM).alive() && dist(*itT, *itM) < mindist && dist(*itT, *itM) <= Tower::max_range)
                 {
-                    mindist = dist(*i, *j);
-                    (*i).set_target(&(*j));
+                    mindist = dist(*itT, *itM);
+                    p = &(*itM);
                 }
+            if (p != NULL) (*itT).set_target(p);
          }
-        if ((*i).getTarget() != NULL && dist(*i, *(*i).getTarget()) > Tower::max_range) (*i).set_target(NULL);
      }
 }
 
 void Chapter::tower_shoot()
 {
-    for (vector<Tower>::iterator it = tower_list.begin(); it != tower_list.end(); it++) (*it).shoot();
+    for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++) (*itT).shoot();
 }
 
 void Chapter::bullet_move()
@@ -114,4 +151,35 @@ void Chapter::bullet_move()
             }
             else itB++;
         }
+}
+
+
+void Chapter::check_status()
+{
+    if (this->hd.getHP() <= 0) this->_status = -1;
+    bool flag = true;
+    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
+        if ((*itM).alive() == true) flag = false;
+    if (flag) this->_status = 1;
+}
+
+
+void Chapter::GameOver(QPainter *painter)
+{
+    QString G_O = "Game Over.";
+    QFont font("Courier", 15, QFont::DemiBold);
+    painter->setFont(font);
+    painter->translate(479, 295);
+    painter->drawText(0, 0, G_O);
+    painter->resetTransform();
+}
+
+void Chapter::Success(QPainter *painter)
+{
+    QString SU = "Success.";
+    QFont font("Courier", 15, QFont::DemiBold);
+    painter->setFont(font);
+    painter->translate(479, 295);
+    painter->drawText(0, 0, SU);
+    painter->resetTransform();
 }

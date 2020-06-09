@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include<vector>
 #include <time.h>
+#include<iostream>
 
 class Tower : public Object
 {
@@ -16,7 +17,6 @@ class Tower : public Object
         void set_target(Monster * t);
         vector<Bullet> * getBlist() {return &this->bullet_list;};
         void show(QPainter *painter);
-        void detect_monster();
         void shoot();
 
     protected:

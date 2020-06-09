@@ -31,11 +31,13 @@ void MainWindow::paintEvent(QPaintEvent *)
 
 void MainWindow::move()
 {
-    this->_chapter.monster_move();
-    this->_chapter.tower_detect();
-    this->_chapter.tower_shoot();
-    this->_chapter.bullet_move();
-    this->_chapter.check_monster();
+    _chapter.place_monster();
+    _chapter.monster_move();
+    _chapter.tower_detect();
+   // _chapter.tower_shoot();
+    _chapter.bullet_move();
+    _chapter.check_monster();
+    _chapter.check_status();
     this->repaint();
 }
 

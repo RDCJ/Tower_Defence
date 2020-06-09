@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 
-int Tower::max_range = 5;
+int Tower::max_range = 3;
 int Tower::tATK = 10;
 
 Tower::Tower(string type) : Object(type)
@@ -14,6 +14,7 @@ Tower::Tower(string type) : Object(type)
 void Tower::set_target(Monster * t)
 {
     this->_target = t;
+   // std::cout<<t<<endl;
     if (t != NULL) this->_start = clock();
 }
 
@@ -27,7 +28,6 @@ void Tower::show(QPainter *painter)
         this->_angle = atan( deltaY/deltaX ) * 180 / 3.1415 + 90;
         if (deltaX < 0) this->_angle += 180;
     }
-
     double GS = 74;
     painter->resetTransform();
     double centerX = this->_x * GS + this->getWidth() * Icon::Grid_Size/2;
@@ -51,7 +51,7 @@ void Tower::shoot()
         double dur = ((double)(this->_stop - this->_start)) / CLK_TCK;
         if (dur >=0.5)
         {
-            Bullet new_bullet("bullet", this->_x, this->_y, this->_target);
+            Bullet new_bullet("bullet", this->_x, this->_y + 0.5, this->_target);
             this->bullet_list.push_back(new_bullet);
             this->_start = clock();
         }

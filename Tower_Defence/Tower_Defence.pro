@@ -47,6 +47,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    Chapter1.ini \
     Icon Set.png \
     Icon Set.png
 
