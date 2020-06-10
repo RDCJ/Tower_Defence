@@ -6,13 +6,16 @@
 #include<vector>
 #include<iostream>
 #include<fstream>
+#include <time.h>
+
 #include "Object.h"
 #include "Monster.h"
 #include "Tower.h"
 #include "Road.h"
 #include "Headquarter.h"
 #include "Bullet.h"
-#include <time.h>
+#include "Hpbar.h"
+
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 #define HEADQUARTER_H
 #include "Object.h"
 #include "Monster.h"
-
+#include "Hpbar.h"
 class Headquarter : public Object
 {
     public:
@@ -13,6 +13,7 @@ class Headquarter : public Object
 
     protected:
         int _hp;
+        Hpbar _hpBar;
 };
 
 #endif // HEADQUARTER_H

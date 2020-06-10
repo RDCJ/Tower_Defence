@@ -1,6 +1,8 @@
 #include "Object.h"
 #include <cmath>
 
+
+
 Object::Object(string type) : _ic(Icon::Icon_Set.find(type)->second)
 {
     QImage all;
@@ -11,7 +13,7 @@ Object::Object(string type) : _ic(Icon::Icon_Set.find(type)->second)
 
 void Object::show(QPainter *painter)
 {
-    double GS = 74;
+    double GS = 2 * Icon::Grid_Size;
     painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
 }
 

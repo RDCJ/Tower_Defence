@@ -28,7 +28,7 @@ void Tower::show(QPainter *painter)
         this->_angle = atan( deltaY/deltaX ) * 180 / 3.1415 + 90;
         if (deltaX < 0) this->_angle += 180;
     }
-    double GS = 74;
+    double GS = 2 * Icon::Grid_Size;
     painter->resetTransform();
     double centerX = this->_x * GS + this->getWidth() * Icon::Grid_Size/2;
     double centerY = this->_y * GS + this->getHeight() * Icon::Grid_Size/2;

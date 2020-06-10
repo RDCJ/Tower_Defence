@@ -2,6 +2,8 @@
 #define MONSTER_H
 #include "Object.h"
 #include "Road.h"
+#include "Hpbar.h"
+
 class Monster : public Object
 {
     public:
@@ -23,6 +25,7 @@ class Monster : public Object
         int _pos;//记录怪物在Road序列中的位置
         bool _alive, if_placed;
         double show_time;
+        Hpbar _hpBar;
 
 };
 

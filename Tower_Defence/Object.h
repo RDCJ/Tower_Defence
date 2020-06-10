@@ -9,7 +9,7 @@ using namespace std;
 
 class Object
 {
-    public:
+    public:    
         Object(string type);
         void show(QPainter *painter);
         void setX(double x) {this->_x = x;};

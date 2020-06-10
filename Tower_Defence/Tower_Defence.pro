@@ -19,6 +19,7 @@ SOURCES += \
     Bullet.cpp \
     Chapter.cpp \
     Headquarter.cpp \
+    Hpbar.cpp \
     Icon.cpp \
     Monster.cpp \
     Object.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     Bullet.h \
     Chapter.h \
     Headquarter.h \
+    Hpbar.h \
     Icon.h \
     Monster.h \
     Object.h \
@@ -48,6 +50,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Chapter1.ini \
+    Icon Set.png \
     Icon Set.png \
     Icon Set.png
 

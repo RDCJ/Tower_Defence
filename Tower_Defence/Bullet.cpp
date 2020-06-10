@@ -11,7 +11,7 @@ Bullet::Bullet(string type, double x, double y, Monster * t):Object(type)
 
 void Bullet::move()
 {
-    if (_target != NULL)
+    if (_target != NULL && (*_target).alive())
     {
         double deltaX = (*_target).getX() - this->getX();
         double deltaY = (*_target).getY() - this->getY();
@@ -25,7 +25,7 @@ void Bullet::move()
 
 void Bullet::show(QPainter *painter)
 {
-    double GS = 74;
+    double GS = 2 * Icon::Grid_Size;
     painter->resetTransform();
     double centerX = this->_x * GS + this->getWidth() * Icon::Grid_Size/2;
     double centerY = this->_y * GS + this->getHeight() * Icon::Grid_Size/2;

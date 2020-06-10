@@ -42,8 +42,8 @@ void Chapter::initChapter(int k)
 void Chapter::createTower(double x, double y)
 {
     Tower newTower("tower");
-    newTower.setX(x/74);
-    newTower.setY(y/74);
+    newTower.setX(x/80);
+    newTower.setY(y/80);
     this->tower_list.push_back(newTower);
 }
 
@@ -101,12 +101,8 @@ void Chapter::check_monster()
             {
                 (*itM).dead();
                 for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)//itT遍历所有防御塔
-                {
                     //将把这只怪物作为目标的防御塔的target清零
                     if ((*itT).getTarget() == &(*itM)) (*itT).set_target(NULL);
-                    for (vector<Bullet>::iterator itB = (*itT).getBlist()->begin(); itB != (*itT).getBlist()->end(); itB++)//itB遍历所有属于itT的子弹
-                        if ((*itB).getTarget() == &(*itM)) (*itB).set_target(NULL);
-                }
             }
         }
 }
@@ -144,7 +140,7 @@ void Chapter::bullet_move()
         for(vector<Bullet>::iterator itB = (*itT).getBlist()->begin(); itB != (*itT).getBlist()->end(); )
         {
             (*itB).move();
-            if ( (*itB).getTarget() != NULL && dist(*itB, *(*itB).getTarget()) < 0.7 )
+            if ( (*itB).getTarget() != NULL && dist(*itB, *(*itB).getTarget()) < 0.5 )
             {
                 (*itB).getTarget()->be_shooted(Tower::tATK);
                 itB = (*itT).getBlist()->erase(itB);

@@ -34,7 +34,7 @@ void MainWindow::move()
     _chapter.place_monster();
     _chapter.monster_move();
     _chapter.tower_detect();
-   // _chapter.tower_shoot();
+    _chapter.tower_shoot();
     _chapter.bullet_move();
     _chapter.check_monster();
     _chapter.check_status();
@@ -46,7 +46,7 @@ void MainWindow::on_Start_clicked()
 {
     this->_chapter.initChapter(1);
     timer->start(100);
-    timer->setInterval(40);
+    timer->setInterval(20);
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *e)

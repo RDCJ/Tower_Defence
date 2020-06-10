@@ -1,9 +1,9 @@
 #include "Monster.h"
 #include <cmath>
 int Monster::mATK = 10;
-double Monster::mSPEED = 0.1;
+double Monster::mSPEED = 0.05;
 
-Monster::Monster(string type, double x, double y, double st) : Object(type)
+Monster::Monster(string type, double x, double y, double st) : Object(type), _hpBar()
 {
     this->_hp = 100;
     this->_pos = 0;
@@ -32,8 +32,9 @@ void Monster::show(QPainter *painter)
 {
     if (if_placed == true && _alive == true)
     {
-        double GS = 74;
-        painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
+        double GS = 2 * Icon::Grid_Size;
+        painter->drawImage(_x * GS, (_y+0.2) * GS, _pic);
+        _hpBar.show(painter, _hp, _x, _y);
     }
 }
 

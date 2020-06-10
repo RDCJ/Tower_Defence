@@ -31,16 +31,16 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(958, 590);
+        MainWindow->resize(1040, 640);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         Start = new QPushButton(centralwidget);
         Start->setObjectName(QString::fromUtf8("Start"));
-        Start->setGeometry(QRect(390, 190, 171, 101));
+        Start->setGeometry(QRect(430, 220, 171, 101));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 958, 28));
+        menubar->setGeometry(QRect(0, 0, 1040, 28));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
