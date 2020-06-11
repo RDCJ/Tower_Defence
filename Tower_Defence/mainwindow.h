@@ -11,7 +11,7 @@
 #include "Object.h"
 #include "Monster.h"
 #include "Tower.h"
-
+#include "Player.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

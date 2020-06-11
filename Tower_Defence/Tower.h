@@ -12,6 +12,7 @@ class Tower : public Object
     public:
         static int max_range;
         static int tATK;
+        static int price;
         Tower(string type);
         Monster * getTarget() const {return _target;};
         void set_target(Monster * t);

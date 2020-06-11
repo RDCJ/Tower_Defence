@@ -3,7 +3,7 @@
 
 //vector迭代器命名规则：itT指向防御塔, itM指向怪物, itB指向子弹
 
-void Chapter::initChapter(int k)
+void Chapter::initChapter(int k, Player pl)
 {
     //string file_name = ":/Chapter" + to_string(k) + ".ini";
     ifstream init_file;
@@ -25,8 +25,10 @@ void Chapter::initChapter(int k)
     }
     init_file.close();
 
+    this->_player = pl;
     this->_start = clock();
     this->_status = 2;
+    this->ifEnd = false;
     //设置基地位置
     int r_size = this->_road.getXlist().size();
     this->hd.setX(this->_road.getXlist()[r_size-1]);
@@ -41,30 +43,72 @@ void Chapter::initChapter(int k)
 
 void Chapter::createTower(double x, double y)
 {
-    Tower newTower("tower");
-    newTower.setX(x/80);
-    newTower.setY(y/80);
-    this->tower_list.push_back(newTower);
+    if (_player.getMoney() >= Tower::price)
+    {
+        _player.changeValue(0, -Tower::price);
+        Tower newTower("tower");
+        newTower.setX(x/80);
+        newTower.setY(y/80);
+        this->tower_list.push_back(newTower);
+    }
 }
 
 
 void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
 {
-    if (this->_status == 2)
-    {
-        painter->drawImage(0, 0, map_pic);
-        painter->drawImage(0, 0, tower_pic);
-        this->hd.show(painter);
-
-        for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
-            (*itM).show(painter);
-        for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
-            (*itT).show(painter);
-
-        if (mouse_flag) painter->drawImage(mx, my, tower_pic);
-    }
-    else if (this->_status == -1) GameOver(painter);
+    if (this->_status != 0) GamingScreen(painter, mouse_flag, mx, my);
+    if (this->_status == -1) GameOver(painter);
     else if (this->_status == 1) Success(painter);
+}
+
+
+void Chapter::GamingScreen(QPainter *painter, bool mouse_flag, double mx, double my)
+{
+    painter->drawImage(0, 0, map_pic);
+    painter->drawImage(0, 0, tower_pic);
+    this->hd.show(painter);
+
+    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
+        (*itM).show(painter);
+    for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
+        (*itT).show(painter);
+
+    if (mouse_flag) painter->drawImage(mx, my, tower_pic);
+
+    if (_status == 2) _player.show(painter);
+}
+
+void Chapter::GameOver(QPainter *painter)
+{
+    ifEnd = true;
+    delay(0.5);
+    QString G_O = "Game Over.";
+    QFont font("Courier", 15, QFont::DemiBold);
+    QFontMetrics fm(font);
+    double textWidth = fm.width(G_O);
+
+    painter->setFont(font);
+    painter->drawText(520 - textWidth/2, 320, G_O);
+    painter->resetTransform();
+
+    _player.show(painter);
+}
+
+void Chapter::Success(QPainter *painter)
+{
+    if (ifEnd == false) _player.changeValue(hd.getHP() * 10, 0);
+    ifEnd = true;
+    delay(0.5);
+    QString SU = "Success.";
+    QFont font("Courier", 15, QFont::DemiBold);
+    QFontMetrics fm(font);
+    double textWidth = fm.width(SU);
+
+    painter->setFont(font);
+    painter->drawText(520 - textWidth/2, 320, SU);
+    painter->resetTransform();
+
+    _player.show(painter);
 }
 
 
@@ -96,7 +140,7 @@ void Chapter::check_monster()
             bool flag2 = (*itM).getHp() <= 0;//判断怪物血量是否为0
 
             if (flag1) this->hd.be_attacked((*itM).mATK);//怪物到达基地则基地的生命值减少
-
+            if (flag2) _player.changeValue(100, 10);
             if (flag1 || flag2)
             {
                 (*itM).dead();
@@ -152,30 +196,26 @@ void Chapter::bullet_move()
 
 void Chapter::check_status()
 {
-    if (this->hd.getHP() <= 0) this->_status = -1;
-    bool flag = true;
-    for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
-        if ((*itM).alive() == true) flag = false;
-    if (flag) this->_status = 1;
+    if (ifEnd == false)
+    {
+        if (this->hd.getHP() <= 0) this->_status = -1;
+        bool flag = true;
+        for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
+            if ((*itM).alive() == true) flag = false;
+        if (flag) this->_status = 1;
+    }
 }
 
 
-void Chapter::GameOver(QPainter *painter)
+void Chapter::delay(double time)
 {
-    QString G_O = "Game Over.";
-    QFont font("Courier", 15, QFont::DemiBold);
-    painter->setFont(font);
-    painter->translate(479, 295);
-    painter->drawText(0, 0, G_O);
-    painter->resetTransform();
-}
-
-void Chapter::Success(QPainter *painter)
-{
-    QString SU = "Success.";
-    QFont font("Courier", 15, QFont::DemiBold);
-    painter->setFont(font);
-    painter->translate(479, 295);
-    painter->drawText(0, 0, SU);
-    painter->resetTransform();
+    clock_t a, b;
+    a = clock();
+    b = clock();
+    double dur = ((double)(b - a)) / CLK_TCK;
+    while (dur < time)
+    {
+        b = clock();
+        dur = ((double)(b - a)) / CLK_TCK;
+    }
 }

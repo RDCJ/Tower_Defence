@@ -44,7 +44,7 @@ void MainWindow::move()
 
 void MainWindow::on_Start_clicked()
 {
-    this->_chapter.initChapter(1);
+    this->_chapter.initChapter(1, Player());
     timer->start(100);
     timer->setInterval(20);
 }

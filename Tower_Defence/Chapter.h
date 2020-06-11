@@ -15,16 +15,20 @@
 #include "Headquarter.h"
 #include "Bullet.h"
 #include "Hpbar.h"
-
+#include "Player.h"
 
 using namespace std;
 
 class Chapter
 {
     public:
-        Chapter() : hd("headquarter") {_status = 0;};
-        void initChapter(int k);
+        Chapter() : hd("headquarter"), _player() {_status = 0;};
+        void initChapter(int k, Player pl);
         void show(QPainter *painter, bool mouse_flag, double mx, double my);
+        void GamingScreen(QPainter *painter, bool mouse_flag, double mx, double my);
+        void GameOver(QPainter *painter);
+        void Success(QPainter *painter);
+        int getStatus() const {return _status;};
         void place_monster();
         void monster_move();
         void check_monster();
@@ -33,18 +37,19 @@ class Chapter
         void bullet_move();
         void createTower(double x, double y);
         void check_status();
-        void GameOver(QPainter *painter);
-        void Success(QPainter *painter);
+        void delay(double time);
 
     protected:
         QImage map_pic, tower_pic;//地图大小：13 * 8
-        Headquarter hd;//基地
-        Road _road;
         vector<Monster> monster_list;
         vector<Tower> tower_list;
         clock_t _start, _stop;
+        Headquarter hd;//基地
         int monster_num;
-        int _status;//记录游戏状态 (0:未开始  1:成功  -1:失败  2:进行中)    
+        int _status;//记录游戏状态 (0:未开始  1:成功  -1:失败  2:进行中)
+        Player _player;
+        Road _road;
+        bool ifEnd;
 };
 
 #endif // CHAPTER_H

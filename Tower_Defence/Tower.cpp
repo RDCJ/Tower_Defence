@@ -4,6 +4,7 @@ using namespace std;
 
 int Tower::max_range = 3;
 int Tower::tATK = 10;
+int Tower::price = 50;
 
 Tower::Tower(string type) : Object(type)
 {
