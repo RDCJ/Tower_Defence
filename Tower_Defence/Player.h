@@ -3,6 +3,8 @@
 #include<QPainter>
 #include<string>
 #include<QString>
+#include "Setting.h"
+
 using namespace std;
 
 class Player

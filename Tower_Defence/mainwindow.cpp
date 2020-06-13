@@ -8,7 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    buttonMove = false;
+    setMouseTracking(true);
+    creatTower = false;
+    lvlupTower = false;
     ui->setupUi(this);
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
@@ -24,7 +26,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter *pa;
     pa = new QPainter();
     pa->begin(this);
-    this->_chapter.show(pa, buttonMove, mouse_x, mouse_y);
+    this->_chapter.show(pa, creatTower, drag_x, drag_y);
     pa->end();
     delete pa;
 }
@@ -53,24 +55,33 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 {
     double mx = e->x();
     double my = e->y();
-
-    if ((mx > 0 && mx < 80) && (my > 0 && my < 80))
+    if (lvlupTower == false)
     {
-        buttonMove = true;
-        mouse_x = mx;
-        mouse_y = my;
+        if ((mx > 0 && mx < 80) && (my > 0 && my < 80))
+        {
+            creatTower = true;
+            drag_x = mx;
+            drag_y = my;
+        }
+        else if ((mx > 80 && mx < 160) && (my > 0 && my < 80))
+        {
+            lvlupTower = true;
+        }
     }
-    else buttonMove = false;
+    else
+    {
+        lvlupTower = false;
+    }
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
-    double mx = e->x();
-    double my = e->y();
-    if (buttonMove == true)
+    mouse_x = e->x();
+    mouse_y = e->y();
+    if (creatTower == true)
     {
-        mouse_x = mx;
-        mouse_y = my;
+        drag_x = mouse_x;
+        drag_y = mouse_y;
     }
 }
 
@@ -78,9 +89,14 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 {
     double mx = e->x();
     double my = e->y();
-    if (buttonMove == true)
+    if (creatTower == true)
     {
         this->_chapter.createTower(mx, my);
-        buttonMove = false;
+        creatTower = false;
     }
+}
+
+void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
+{
+
 }

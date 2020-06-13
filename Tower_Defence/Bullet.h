@@ -2,6 +2,7 @@
 #define BULLET_H
 #include "Object.h"
 #include "Monster.h"
+#include "Setting.h"
 
 class Bullet : public Object
 {

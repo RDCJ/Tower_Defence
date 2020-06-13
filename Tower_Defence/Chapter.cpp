@@ -18,9 +18,9 @@ void Chapter::initChapter(int k, Player pl)
     init_file>>monster_num;
     for (int i=0; i<monster_num; i++)
     {
-        int t;
-        init_file >>t;
-        Monster new_monster("monster", _road.getXlist()[0], _road.getYlist()[0], t);
+        int ti, lv;
+        init_file >>ti >>lv;
+        Monster new_monster("monster", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
         this->monster_list.push_back(new_monster);
     }
     init_file.close();
@@ -88,7 +88,7 @@ void Chapter::GameOver(QPainter *painter)
     double textWidth = fm.width(G_O);
 
     painter->setFont(font);
-    painter->drawText(520 - textWidth/2, 320, G_O);
+    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT/2, G_O);
     painter->resetTransform();
 
     _player.show(painter);
@@ -105,7 +105,7 @@ void Chapter::Success(QPainter *painter)
     double textWidth = fm.width(SU);
 
     painter->setFont(font);
-    painter->drawText(520 - textWidth/2, 320, SU);
+    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT/2, SU);
     painter->resetTransform();
 
     _player.show(painter);
@@ -139,8 +139,8 @@ void Chapter::check_monster()
             bool flag1 = dist((*itM), this->hd) < 0.7;//判断怪物是否到达基地
             bool flag2 = (*itM).getHp() <= 0;//判断怪物血量是否为0
 
-            if (flag1) this->hd.be_attacked((*itM).mATK);//怪物到达基地则基地的生命值减少
-            if (flag2) _player.changeValue(100, 10);
+            if (flag1) this->hd.be_attacked((*itM).getATK());//怪物到达基地则基地的生命值减少
+            if (flag2) _player.changeValue(EACH_M_SCORE, EACH_M_MONEY);
             if (flag1 || flag2)
             {
                 (*itM).dead();
@@ -186,7 +186,7 @@ void Chapter::bullet_move()
             (*itB).move();
             if ( (*itB).getTarget() != NULL && dist(*itB, *(*itB).getTarget()) < 0.5 )
             {
-                (*itB).getTarget()->be_shooted(Tower::tATK);
+                (*itB).getTarget()->be_shooted((*itT).getATK());
                 itB = (*itT).getBlist()->erase(itB);
             }
             else itB++;

@@ -16,6 +16,7 @@
 #include "Bullet.h"
 #include "Hpbar.h"
 #include "Player.h"
+#include "Setting.h"
 
 using namespace std;
 

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 5. 更加美观的UI
 6. 修正地图的大小规格(finished)
 7. 更丰富的防御塔与怪物
-
+8. 显示防御塔的攻击范围
 
 已知的bug：
 1. 删除怪物时会使monster_list里的对象的地址改变，从而导致tower的target所指的地址发生错误(已解决)

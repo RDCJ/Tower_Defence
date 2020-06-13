@@ -2,14 +2,15 @@
 #include <cmath>
 using namespace std;
 
-int Tower::max_range = 3;
-int Tower::tATK = 10;
-int Tower::price = 50;
+int Tower::max_range = TOWER_RANGE;
+int Tower::price = TOWER_PRICE;
 
 Tower::Tower(string type) : Object(type)
 {
     this->_target = NULL;
     _angle = 0;
+    _lv = 1;
+    _atk = _lv * TATK;
 }
 
 void Tower::set_target(Monster * t)
@@ -31,13 +32,20 @@ void Tower::show(QPainter *painter)
     }
     double GS = 2 * Icon::Grid_Size;
     painter->resetTransform();
-    double centerX = this->_x * GS + this->getWidth() * Icon::Grid_Size/2;
-    double centerY = this->_y * GS + this->getHeight() * Icon::Grid_Size/2;
+    double centerX = this->_x * GS + this->getWidth() * GS/4;
+    double centerY = this->_y * GS + this->getHeight() * GS/4;
     //旋转坐标系并绘制
     painter->translate(centerX, centerY);
     painter->rotate(_angle);
     painter->translate(-centerX, -centerY);
     painter->drawImage(this->_x * GS, this->_y * GS, this->_pic);
+    painter->resetTransform();
+
+    QString LV = "Lv." + QString::number(_lv);
+    QFont font("Courier", 8, QFont::DemiBold);
+
+    painter->setFont(font);
+    painter->drawText(_x * GS + 5, _y * GS - 5, LV);
     painter->resetTransform();
 
     for (vector<Bullet>::iterator it = bullet_list.begin(); it != bullet_list.end(); it++) (*it).show(painter);
@@ -57,4 +65,11 @@ void Tower::shoot()
             this->_start = clock();
         }
     }
+}
+
+
+void Tower::lvlup()
+{
+    _lv ++;
+    _atk = _lv * TATK;
 }

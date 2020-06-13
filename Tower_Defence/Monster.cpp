@@ -1,16 +1,17 @@
 #include "Monster.h"
 #include <cmath>
-int Monster::mATK = 10;
-double Monster::mSPEED = 0.05;
+double Monster::mSPEED = MONSTER_SPEED;
 
-Monster::Monster(string type, double x, double y, double st) : Object(type), _hpBar()
+Monster::Monster(string type, double x, double y, double st, int lv) : Object(type), _hpBar()
 {
     this->_hp = 100;
     this->_pos = 0;
     this->_x = x;
     this->_y = y;
+    this->_lv = lv;
     this->show_time = st;
     this->_alive = true;
+    this->_atk = _lv *  MATK;
     this->if_placed = false;
 }
 
@@ -35,6 +36,13 @@ void Monster::show(QPainter *painter)
         double GS = 2 * Icon::Grid_Size;
         painter->drawImage(_x * GS, (_y+0.2) * GS, _pic);
         _hpBar.show(painter, _hp, _x, _y);
+
+        QString LV = "Lv." + QString::number(_lv);
+        QFont font("Courier", 8, QFont::DemiBold);
+
+        painter->setFont(font);
+        painter->drawText(_x * GS + 5, _y * GS - 5, LV);
+        painter->resetTransform();
     }
 }
 

@@ -18,8 +18,8 @@ void Player::show(QPainter *painter)
 
     painter->setFont(font);
 
-    painter->drawText(1040 - textWidthS, 20, score_text);
-    painter->drawText(1040 - textWidthM, 40, money_text);
+    painter->drawText(WIN_WIDTH - textWidthS, 20, score_text);
+    painter->drawText(WIN_WIDTH - textWidthM, 40, money_text);
     painter->resetTransform();
 }
 

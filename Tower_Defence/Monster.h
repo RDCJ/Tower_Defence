@@ -3,15 +3,16 @@
 #include "Object.h"
 #include "Road.h"
 #include "Hpbar.h"
+#include "Setting.h"
 
 class Monster : public Object
 {
     public:
-        static int mATK;
         static double mSPEED;
-        Monster(string type, double x, double y, double st);
+        Monster(string type, double x, double y, double st, int lv);
         int getHp() const {return _hp;};
         bool alive() const {return _alive;};
+        int getATK() const {return _atk;};
         double getST() const {return show_time;};
         bool ifPlaced() const {return if_placed;};
         void place() {if_placed = true;};
@@ -23,6 +24,8 @@ class Monster : public Object
     protected:
         int _hp;
         int _pos;//记录怪物在Road序列中的位置
+        int _atk;
+        int _lv;
         bool _alive, if_placed;
         double show_time;
         Hpbar _hpBar;

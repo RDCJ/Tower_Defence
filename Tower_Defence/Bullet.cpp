@@ -1,6 +1,6 @@
 #include "Bullet.h"
 #include<cmath>
-double Bullet::bSPEED = 0.3;
+double Bullet::bSPEED = BULLET_SPEED;
 
 Bullet::Bullet(string type, double x, double y, Monster * t):Object(type)
 {

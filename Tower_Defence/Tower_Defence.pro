@@ -25,6 +25,7 @@ SOURCES += \
     Object.cpp \
     Player.cpp \
     Road.cpp \
+    Setting.cpp \
     Tower.cpp \
     main.cpp \
     mainwindow.cpp
@@ -39,6 +40,7 @@ HEADERS += \
     Object.h \
     Player.h \
     Road.h \
+    Setting.h \
     Tower.h \
     mainwindow.h
 

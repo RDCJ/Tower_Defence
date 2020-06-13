@@ -35,11 +35,13 @@ class MainWindow : public QMainWindow
 private slots:
         void on_Start_clicked();
 
+        void on_MainWindow_customContextMenuRequested(const QPoint &pos);
+
 private:
         Ui::MainWindow *ui;
         Chapter _chapter;
         QTimer *timer;
-        bool buttonMove;
-        double mouse_x, mouse_y;
+        bool creatTower, lvlupTower;
+        double mouse_x, mouse_y, drag_x, drag_y;
 };
 #endif // MAINWINDOW_H
