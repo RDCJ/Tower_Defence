@@ -1,0 +1,22 @@
+第二次大作业提交说明：
+1. 新增功能：
+	a.修改Object的坐标数据类型，实现怪物的连贯移动
+	b.增加了Bullet类，并在Tower、Chapter中添加了相关方法(shoot)。现在防御塔可以发生子弹攻击。
+	c.在mainwindow.h中添加了处理鼠标事件(press, move, release)的函数
+	d.在Chapter中添加了createTower()方法，通过鼠标事件监控，实现了放置防御塔的功能。
+	e.在Chapter中添加了成员_status与Success()和GameOver()方法，用于判断并显示游戏成功与失败。
+	f. 更改了Chapter的初始化函数initChapter()和Road的构造函数, 现在游戏可以从ini文件中加载地图信息
+	g.添加了Hpbar类，并调整了Monster和Headquarterd的show()方法，现在可以显示怪物和基地的血量
+	h.添加了Player类，用于计算，记录游戏得分和金钱并显示在屏幕上
+	i. 添加了文件Setting.h和Setting.cpp，用于记录游戏内的各种参数，便于修改。
+	j. 给Monster和Tower添加了成员_lv, _atk。修改了攻击力的计算方式。修改了它们的show()方法。现在可以显示每个防御塔和怪物的等级。
+	k. 给Tower添加了lvlup()方法，通过鼠标事件监控。现在可以给防御塔升级。
+	l. 在Chapter中添加了showTowerRange()方法， 并通过鼠标事件监控。现在将鼠标移至防御塔的位置可显示攻击范围。
+
+2. 修复bug：
+	a. 修复了防御塔无法旋转的bug(Tower的show()方法)
+	b. 删除怪物时会使monster_list里的对象的地址改变，从而导致tower的target所指的地址发生错误
+	c. 往vector中添加元素时会改变整个数组中元素的地址，从而导致tower的target所指的地址发生错误
+	d. 修正了地图的规格大小
+
+PS. 以上说明均直接引用历次上传的Commit Description

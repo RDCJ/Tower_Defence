@@ -56,7 +56,8 @@ DISTFILES += \
     Chapter1.ini \
     Icon Set.png \
     Icon Set.png \
-    Icon Set.png
+    Icon Set.png \
+    changelog_1.txt
 
 RESOURCES += \
     game.qrc
