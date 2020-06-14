@@ -6,20 +6,21 @@
 void Chapter::initChapter(int k, Player pl)
 {
     //string file_name = ":/Chapter" + to_string(k) + ".ini";
-    ifstream init_file;
-    init_file.open("F://Tower_Defence//Tower_Defence//Chapter1.ini", ios::in);
+    QFile init_file(":/chapter/Chapter1.ini");
+    init_file.open(QIODevice::ReadOnly);
+    QTextStream stream(&init_file);
     //读取路径信息
     int n;
-    init_file>>n;
+    stream>>n;
     int xl[n], yl[n];
-    for (int i=0; i<n; i++) init_file >>xl[i] >>yl[i];
+    for (int i=0; i<n; i++) stream >>xl[i] >>yl[i];
     this->_road.initRoad(n, xl, yl);
     //读取怪物信息
-    init_file>>monster_num;
+    stream>>monster_num;
     for (int i=0; i<monster_num; i++)
     {
         int ti, lv;
-        init_file >>ti >>lv;
+        stream >>ti >>lv;
         Monster new_monster("monster", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
         this->monster_list.push_back(new_monster);
     }
@@ -35,7 +36,8 @@ void Chapter::initChapter(int k, Player pl)
     this->hd.setY(this->_road.getYlist()[r_size-1]);
 
     int GS = Icon::Grid_Size;
-    this->map_pic.load(":/image/raw map.png");
+    map_pic.load(":/image/raw map.png");
+    harmmer_pic.load(":/image/Harmmer.png");
     tower_pic.load(":/image/Icon Set.png");
     tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
 }
@@ -47,8 +49,8 @@ void Chapter::createTower(double x, double y)
     {
         _player.changeValue(0, -Tower::price);
         Tower newTower("tower");
-        newTower.setX(x/80);
-        newTower.setY(y/80);
+        newTower.setX((x-40)/80);
+        newTower.setY((y-40)/80);
         this->tower_list.push_back(newTower);
     }
 }
@@ -59,6 +61,7 @@ void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
     if (this->_status != 0) GamingScreen(painter, mouse_flag, mx, my);
     if (this->_status == -1) GameOver(painter);
     else if (this->_status == 1) Success(painter);
+    showTowerRange(painter);
 }
 
 
@@ -66,6 +69,7 @@ void Chapter::GamingScreen(QPainter *painter, bool mouse_flag, double mx, double
 {
     painter->drawImage(0, 0, map_pic);
     painter->drawImage(0, 0, tower_pic);
+    painter->drawImage(80, 0, harmmer_pic);
     this->hd.show(painter);
 
     for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
@@ -73,7 +77,7 @@ void Chapter::GamingScreen(QPainter *painter, bool mouse_flag, double mx, double
     for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
         (*itT).show(painter);
 
-    if (mouse_flag) painter->drawImage(mx, my, tower_pic);
+    if (mouse_flag) painter->drawImage(mx-40, my-40, tower_pic);
 
     if (_status == 2) _player.show(painter);
 }
@@ -88,7 +92,7 @@ void Chapter::GameOver(QPainter *painter)
     double textWidth = fm.width(G_O);
 
     painter->setFont(font);
-    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT/2, G_O);
+    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT - 80, G_O);
     painter->resetTransform();
 
     _player.show(painter);
@@ -105,12 +109,31 @@ void Chapter::Success(QPainter *painter)
     double textWidth = fm.width(SU);
 
     painter->setFont(font);
-    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT/2, SU);
+    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT - 80, SU);
     painter->resetTransform();
 
     _player.show(painter);
 }
 
+
+void Chapter::showTowerRange(QPainter *painter)
+{
+    int GS = Icon::Grid_Size;
+    for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
+    {
+        double left = (*itT).getX() * GS *2,
+                   right = ((*itT).getX() + 1) * GS *2,
+                   top = (*itT).getY() * GS *2,
+                   bottom = ((*itT).getY() + 1) * GS * 2;
+        if (_mx > left && _mx < right && _my > top && _my < bottom)
+        {
+            double r = Tower::max_range * GS * 2;
+            painter->drawEllipse((*itT).getX() * GS *2 - r + 40, (*itT).getY() * GS *2 - r + 40,
+                                             r *2, r *2);
+            break;
+        }
+    }
+}
 
 void Chapter::place_monster()
 {
@@ -218,4 +241,29 @@ void Chapter::delay(double time)
         b = clock();
         dur = ((double)(b - a)) / CLK_TCK;
     }
+}
+
+void Chapter::lvlupTower(double x, double y)
+{
+    int GS = Icon::Grid_Size;
+    for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
+    {
+        double left = (*itT).getX() * GS *2,
+                   right = ((*itT).getX() + 1) * GS *2,
+                   top = (*itT).getY() * GS *2,
+                   bottom = ((*itT).getY() + 1) * GS * 2;
+        if (x > left && x < right && y > top && y < bottom)
+        {
+            (*itT).lvlup();
+            _player.changeValue(0, -LVLUP_PRICE);
+            break;
+        }
+    }
+}
+
+
+void Chapter::setMxy(double x, double y)
+{
+    _mx = x;
+    _my = y;
 }

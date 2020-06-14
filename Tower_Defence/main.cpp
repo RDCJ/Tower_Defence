@@ -23,12 +23,12 @@ int main(int argc, char *argv[])
                     以下n行 xi yi 表示路径
                     num（怪物数量）
                     以下num行 ti 表示每个怪物出现的时间
-3. 防御塔升级系统
+3. 防御塔升级系统(finished)
 4. 多关卡切换
 5. 更加美观的UI
 6. 修正地图的大小规格(finished)
 7. 更丰富的防御塔与怪物
-8. 显示防御塔的攻击范围
+8. 显示防御塔的攻击范围(finished)
 
 已知的bug：
 1. 删除怪物时会使monster_list里的对象的地址改变，从而导致tower的target所指的地址发生错误(已解决)

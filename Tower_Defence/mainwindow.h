@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QTimer>
 #include <QMouseEvent>
-
+#include <iostream>
 #include "Chapter.h"
 #include "Object.h"
 #include "Monster.h"

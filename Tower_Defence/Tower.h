@@ -10,7 +10,7 @@
 class Tower : public Object
 {
     public:
-        static int max_range;
+        static double max_range;
         static int price;
         Tower(string type);
         Monster * getTarget() const {return _target;};

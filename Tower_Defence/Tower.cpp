@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 
-int Tower::max_range = TOWER_RANGE;
+double Tower::max_range = TOWER_RANGE;
 int Tower::price = TOWER_PRICE;
 
 Tower::Tower(string type) : Object(type)
@@ -16,7 +16,6 @@ Tower::Tower(string type) : Object(type)
 void Tower::set_target(Monster * t)
 {
     this->_target = t;
-   // std::cout<<t<<endl;
     if (t != NULL) this->_start = clock();
 }
 

@@ -8,10 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
+    this->centralWidget()->setMouseTracking(true);
     setMouseTracking(true);
     creatTower = false;
     lvlupTower = false;
-    ui->setupUi(this);
+
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 }
@@ -55,6 +57,7 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
 {
     double mx = e->x();
     double my = e->y();
+    //std::cout<<mx<<' '<<my<<endl;
     if (lvlupTower == false)
     {
         if ((mx > 0 && mx < 80) && (my > 0 && my < 80))
@@ -66,10 +69,14 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
         else if ((mx > 80 && mx < 160) && (my > 0 && my < 80))
         {
             lvlupTower = true;
+            QCursor m_harmmer(QPixmap(":/image/mouse_Harmmer.png"));
+            QApplication::setOverrideCursor(m_harmmer);
         }
     }
     else
     {
+        QApplication::restoreOverrideCursor();
+        _chapter.lvlupTower(mx, my);
         lvlupTower = false;
     }
 }
@@ -78,6 +85,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e)
 {
     mouse_x = e->x();
     mouse_y = e->y();
+    _chapter.setMxy(mouse_x, mouse_y);
     if (creatTower == true)
     {
         drag_x = mouse_x;

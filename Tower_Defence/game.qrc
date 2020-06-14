@@ -2,6 +2,8 @@
     <qresource prefix="/image">
         <file>raw map.png</file>
         <file>Icon Set.png</file>
+        <file>Harmmer.png</file>
+        <file>mouse_Harmmer.png</file>
     </qresource>
     <qresource prefix="/chapter">
         <file>Chapter1.ini</file>
