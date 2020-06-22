@@ -24,8 +24,8 @@ using namespace std;
 class Chapter
 {
     public:
-        Chapter() : hd("headquarter"), _player() {_status = 0;};
-        void initChapter(int k, Player pl);
+        Chapter();
+        void initChapter(int k);
         void show(QPainter *painter, bool mouse_flag, double mx, double my);
         void GamingScreen(QPainter *painter, bool mouse_flag, double mx, double my);
         void GameOver(QPainter *painter);
@@ -40,7 +40,6 @@ class Chapter
         void bullet_move();
         void createTower(double x, double y);
         void lvlupTower(double x, double y);
-        //string blockType(double x, double y);
         void check_status();
         void delay(double time);
         void setMxy(double x, double y);

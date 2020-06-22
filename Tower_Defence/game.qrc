@@ -7,5 +7,7 @@
     </qresource>
     <qresource prefix="/chapter">
         <file>Chapter1.ini</file>
+        <file>Chapter2.ini</file>
+        <file>Chapter3.ini</file>
     </qresource>
 </RCC>

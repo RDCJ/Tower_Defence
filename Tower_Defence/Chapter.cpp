@@ -3,14 +3,28 @@
 
 //vector迭代器命名规则：itT指向防御塔, itM指向怪物, itB指向子弹
 
-void Chapter::initChapter(int k, Player pl)
+Chapter::Chapter() : hd("headquarter"), _player()
 {
-    //string file_name = ":/Chapter" + to_string(k) + ".ini";
-    QFile init_file(":/chapter/Chapter1.ini");
+    _status = 0;
+    int GS = Icon::Grid_Size;
+    map_pic.load(":/image/raw map.png");
+    harmmer_pic.load(":/image/Harmmer.png");
+    tower_pic.load(":/image/Icon Set.png");
+    tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
+}
+
+
+void Chapter::initChapter(int k)
+{
+    tower_list.clear();
+    monster_list.clear();
+
+    QString file_name = ":/chapter/Chapter" + QString::number(k) + ".ini";
+    QFile init_file(file_name);
     init_file.open(QIODevice::ReadOnly);
     QTextStream stream(&init_file);
     //读取路径信息
-    int n;
+    int n, m;
     stream>>n;
     int xl[n], yl[n];
     for (int i=0; i<n; i++) stream >>xl[i] >>yl[i];
@@ -24,22 +38,17 @@ void Chapter::initChapter(int k, Player pl)
         Monster new_monster("monster", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
         this->monster_list.push_back(new_monster);
     }
+    //设置初始金钱
+    stream>>m;
+    this->_player.reset(m);
     init_file.close();
 
-    this->_player = pl;
     this->_start = clock();
     this->_status = 2;
     this->ifEnd = false;
     //设置基地位置
     int r_size = this->_road.getXlist().size();
-    this->hd.setX(this->_road.getXlist()[r_size-1]);
-    this->hd.setY(this->_road.getYlist()[r_size-1]);
-
-    int GS = Icon::Grid_Size;
-    map_pic.load(":/image/raw map.png");
-    harmmer_pic.load(":/image/Harmmer.png");
-    tower_pic.load(":/image/Icon Set.png");
-    tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
+    hd.init_hd(_road.getXlist()[r_size-1], _road.getYlist()[r_size-1]);
 }
 
 
@@ -68,8 +77,8 @@ void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
 void Chapter::GamingScreen(QPainter *painter, bool mouse_flag, double mx, double my)
 {
     painter->drawImage(0, 0, map_pic);
-    painter->drawImage(0, 0, tower_pic);
-    painter->drawImage(80, 0, harmmer_pic);
+    painter->drawImage(400, 560, tower_pic);
+    painter->drawImage(560, 560, harmmer_pic);
     this->hd.show(painter);
 
     for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
@@ -245,6 +254,7 @@ void Chapter::delay(double time)
 
 void Chapter::lvlupTower(double x, double y)
 {
+    if (_player.getMoney() < LVLUP_PRICE) return;
     int GS = Icon::Grid_Size;
     for (vector<Tower>::iterator itT = tower_list.begin(); itT != tower_list.end(); itT++)
     {

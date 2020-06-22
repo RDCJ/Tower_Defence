@@ -13,7 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     setMouseTracking(true);
     creatTower = false;
     lvlupTower = false;
-
+    ifPause = false;
+    ui->pause->setHidden(true);
+    ui->groupBox->setHidden(true);
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
 }
@@ -35,23 +37,19 @@ void MainWindow::paintEvent(QPaintEvent *)
 
 void MainWindow::move()
 {
-    _chapter.place_monster();
-    _chapter.monster_move();
-    _chapter.tower_detect();
-    _chapter.tower_shoot();
-    _chapter.bullet_move();
-    _chapter.check_monster();
-    _chapter.check_status();
+    if (ifPause == false)
+    {
+        _chapter.place_monster();
+        _chapter.monster_move();
+        _chapter.tower_detect();
+        _chapter.tower_shoot();
+        _chapter.bullet_move();
+        _chapter.check_monster();
+        _chapter.check_status();
+    }
     this->repaint();
 }
 
-
-void MainWindow::on_Start_clicked()
-{
-    this->_chapter.initChapter(1, Player());
-    timer->start(100);
-    timer->setInterval(20);
-}
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
@@ -60,13 +58,13 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
     //std::cout<<mx<<' '<<my<<endl;
     if (lvlupTower == false)
     {
-        if ((mx > 0 && mx < 80) && (my > 0 && my < 80))
+        if ((mx > 400 && mx < 480) && (my > 560 && my < 640))
         {
             creatTower = true;
             drag_x = mx;
             drag_y = my;
         }
-        else if ((mx > 80 && mx < 160) && (my > 0 && my < 80))
+        else if ((mx > 560 && mx < 640) && (my > 560 && my < 640))
         {
             lvlupTower = true;
             QCursor m_harmmer(QPixmap(":/image/mouse_Harmmer.png"));
@@ -107,4 +105,51 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e)
 void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 {
 
+}
+
+void MainWindow::chapter_start(int k)
+{
+    nowChapter = k;
+    this->_chapter.initChapter(k);
+    timer->start(100);
+    timer->setInterval(20);
+}
+
+void MainWindow::on_chapter1_clicked()
+{
+    chapter_start(1);
+}
+
+
+void MainWindow::on_chapter2_clicked()
+{
+    chapter_start(2);
+}
+
+void MainWindow::on_chapter3_clicked()
+{
+    chapter_start(3);
+}
+
+
+void MainWindow::on_pause_clicked()
+{
+    this->ifPause = true;
+}
+
+void MainWindow::on_contin_clicked()
+{
+    this->ifPause = false;
+}
+
+void MainWindow::on_restart_clicked()
+{
+    this->ifPause = false;
+    chapter_start(nowChapter);
+}
+
+void MainWindow::on_back_clicked()
+{
+    this->ifPause = false;
+    timer->stop();
 }

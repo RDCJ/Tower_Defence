@@ -3,8 +3,9 @@
 Player::Player()
 {
     _score = 0;
-    _money = 100;
+    _money = 0;
 }
+
 
 void Player::show(QPainter *painter)
 {

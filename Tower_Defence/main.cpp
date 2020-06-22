@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 计划：
 0. 判定成功与失败 (finished)
 1. 显示血条（基地、怪物）(finished)
-2. 通过文件读取关卡信息 (还有文件路径的问题未解决)
+2. 通过文件读取关卡信息 (finished)
        地图路径
        出怪的数量与时间
        文件格式：
@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
                     以下n行 xi yi 表示路径
                     num（怪物数量）
                     以下num行 ti 表示每个怪物出现的时间
+                    最后一行为起始金钱
 3. 防御塔升级系统(finished)
 4. 多关卡切换
 5. 更加美观的UI
