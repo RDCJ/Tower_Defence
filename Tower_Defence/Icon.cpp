@@ -8,8 +8,12 @@ pair<string, Icon> pairArr[] =
     make_pair("monster", Icon("monster", 0, 0, 2, 1)),
     make_pair("headquarter", Icon("Headquarter",4, 2, 2, 2)),
     make_pair("bullet", Icon("bullet", 0, 4, 2, 0.35)),
-    make_pair("hpBarFrame", Icon("hpBarFrame", 2, 4, 2.05, 0.3)),
-    make_pair("hpGreen", Icon("hpGreen", 4.05, 4, 0.2, 0.25))
+    make_pair("hpBarFrame", Icon("hpBarFrame", 2, 4, 2.55, 0.3)),
+    make_pair("hpGreen", Icon("hpGreen", 5.8, 4, 0.025, 0.25)),
+    make_pair("worm", Icon("worm", 0, 1, 2, 1)),
+    make_pair("bigmouth", Icon("bigmouth", 0, 0, 2, 1)),
+    make_pair("slime", Icon("slime", 0, 3, 2, 1)),
+    make_pair("minislime", Icon("minislime", 4.55, 4, 1.25, 0.75))
 };
 
 map<string, Icon> Icon::Icon_Set(pairArr, pairArr+sizeof(pairArr)/sizeof(pairArr[0]));

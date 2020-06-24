@@ -18,6 +18,10 @@
 #include "Hpbar.h"
 #include "Player.h"
 #include "Setting.h"
+#include "Worm.h"
+#include "Slime.h"
+#include "BigMouth.h"
+#include "MiniSlime.h"
 
 using namespace std;
 
@@ -43,9 +47,10 @@ class Chapter
         void check_status();
         void delay(double time);
         void setMxy(double x, double y);
+        void slime_split(double x, double y, int lv, int pos, vector<MiniSlime> * list);
 
     protected:
-        QImage map_pic, tower_pic, harmmer_pic;//地图大小：13 * 8
+        QImage map_pic[3], tower_pic, harmmer_pic;//地图大小：13 * 8
         vector<Monster> monster_list;
         vector<Tower> tower_list;
         clock_t _start, _stop;
@@ -56,6 +61,7 @@ class Chapter
         Player _player;
         Road _road;
         bool ifEnd;
+        int now_chapter;
 };
 
 #endif // CHAPTER_H

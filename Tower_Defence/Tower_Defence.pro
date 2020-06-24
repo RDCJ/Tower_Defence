@@ -16,32 +16,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BigMouth.cpp \
     Bullet.cpp \
     Chapter.cpp \
     Headquarter.cpp \
     Hpbar.cpp \
     Icon.cpp \
+    MiniSlime.cpp \
     Monster.cpp \
     Object.cpp \
     Player.cpp \
     Road.cpp \
     Setting.cpp \
+    Slime.cpp \
     Tower.cpp \
+    Worm.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    BigMouth.h \
     Bullet.h \
     Chapter.h \
     Headquarter.h \
     Hpbar.h \
     Icon.h \
+    MiniSlime.h \
     Monster.h \
     Object.h \
     Player.h \
     Road.h \
     Setting.h \
+    Slime.h \
     Tower.h \
+    Worm.h \
     mainwindow.h
 
 FORMS += \

@@ -4,7 +4,9 @@ using namespace std;
 
 double Tower::max_range = TOWER_RANGE;
 int Tower::price = TOWER_PRICE;
-
+int Tower::base_atk = 10;
+int Tower::lvup_atk = 5
+        ;
 Tower::Tower(string type) : Object(type)
 {
     this->_target = NULL;
@@ -70,5 +72,5 @@ void Tower::shoot()
 void Tower::lvlup()
 {
     _lv ++;
-    _atk = _lv * TATK;
+    _atk = Tower::base_atk + (_lv-1) * Tower::lvup_atk;
 }

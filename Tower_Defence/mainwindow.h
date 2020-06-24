@@ -40,12 +40,6 @@ class MainWindow : public QMainWindow
             void on_chapter2_clicked();
             void on_chapter3_clicked();
 
-            void on_menuChapter1_triggered();
-
-            void on_menuChapter2_triggered();
-
-            void on_menuChapter3_triggered();
-
             void on_pause_clicked();
 
             void on_contin_clicked();

@@ -7,7 +7,9 @@ Chapter::Chapter() : hd("headquarter"), _player()
 {
     _status = 0;
     int GS = Icon::Grid_Size;
-    map_pic.load(":/image/raw map.png");
+    map_pic[0].load(":/image/chapter1map.png");
+    map_pic[1].load(":/image/chapter2map.png");
+    map_pic[2].load(":/image/chapter3map.png");
     harmmer_pic.load(":/image/Harmmer.png");
     tower_pic.load(":/image/Icon Set.png");
     tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
@@ -16,6 +18,8 @@ Chapter::Chapter() : hd("headquarter"), _player()
 
 void Chapter::initChapter(int k)
 {
+    now_chapter = k;
+
     tower_list.clear();
     monster_list.clear();
 
@@ -33,10 +37,23 @@ void Chapter::initChapter(int k)
     stream>>monster_num;
     for (int i=0; i<monster_num; i++)
     {
-        int ti, lv;
-        stream >>ti >>lv;
-        Monster new_monster("monster", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
-        this->monster_list.push_back(new_monster);
+        int type, ti, lv;
+        stream >>type >>ti >>lv;
+        if (type == 1)
+        {
+            Worm new_monster("worm", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
+            this->monster_list.push_back(new_monster);
+        }
+        else if (type == 2)
+        {
+            Slime new_monster("slime", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
+            this->monster_list.push_back(new_monster);
+        }
+        else if (type == 3)
+        {
+            BigMouth new_monster("bigmouth", _road.getXlist()[0], _road.getYlist()[0], ti, lv);
+            this->monster_list.push_back(new_monster);
+        }
     }
     //设置初始金钱
     stream>>m;
@@ -76,9 +93,20 @@ void Chapter::show(QPainter *painter, bool mouse_flag, double mx, double my)
 
 void Chapter::GamingScreen(QPainter *painter, bool mouse_flag, double mx, double my)
 {
-    painter->drawImage(0, 0, map_pic);
+    painter->drawImage(0, 0, map_pic[now_chapter - 1]);
     painter->drawImage(400, 560, tower_pic);
     painter->drawImage(560, 560, harmmer_pic);
+    QFont font("Courier", 17, QFont::DemiBold);
+    QFontMetrics fm(font);
+    {
+        QString Sale = "防御塔:$" + QString::number(TOWER_PRICE);
+        painter->drawText(400, 560, Sale);
+    }
+    {
+        QString Sale = "升级:$" + QString::number(LVLUP_PRICE);
+        painter->drawText(560, 560, Sale);
+    }
+    painter->resetTransform();
     this->hd.show(painter);
 
     for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)
@@ -96,12 +124,12 @@ void Chapter::GameOver(QPainter *painter)
     ifEnd = true;
     delay(0.5);
     QString G_O = "Game Over.";
-    QFont font("Courier", 15, QFont::DemiBold);
+    QFont font("Microsoft YaHei", 30, QFont::DemiBold);
     QFontMetrics fm(font);
     double textWidth = fm.width(G_O);
 
     painter->setFont(font);
-    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT - 80, G_O);
+    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT - 120, G_O);
     painter->resetTransform();
 
     _player.show(painter);
@@ -113,12 +141,12 @@ void Chapter::Success(QPainter *painter)
     ifEnd = true;
     delay(0.5);
     QString SU = "Success.";
-    QFont font("Courier", 15, QFont::DemiBold);
+    QFont font("Microsoft YaHei", 30, QFont::DemiBold);
     QFontMetrics fm(font);
     double textWidth = fm.width(SU);
 
     painter->setFont(font);
-    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT - 80, SU);
+    painter->drawText(WIN_WIDTH/2 - textWidth/2, WIN_HEIGHT - 120, SU);
     painter->resetTransform();
 
     _player.show(painter);
@@ -165,11 +193,15 @@ void Chapter::monster_move()
 
 void Chapter::check_monster()
 {
+    vector<MiniSlime> splited;
     for (vector<Monster>::iterator itM = monster_list.begin(); itM != monster_list.end(); itM++)//itM遍历所有怪物
         if ( (*itM).ifPlaced() && (*itM).alive() )
         {
             bool flag1 = dist((*itM), this->hd) < 0.7;//判断怪物是否到达基地
             bool flag2 = (*itM).getHp() <= 0;//判断怪物血量是否为0
+
+            if (flag2 && (*itM).getType() == "slime")
+                    slime_split((*itM).getX(), (*itM).getY(), (*itM).getLv(), (*itM).getPos(), &splited);
 
             if (flag1) this->hd.be_attacked((*itM).getATK());//怪物到达基地则基地的生命值减少
             if (flag2) _player.changeValue(EACH_M_SCORE, EACH_M_MONEY);
@@ -181,6 +213,8 @@ void Chapter::check_monster()
                     if ((*itT).getTarget() == &(*itM)) (*itT).set_target(NULL);
             }
         }
+    for (vector<MiniSlime>::iterator itS = splited.begin(); itS != splited.end(); itS++)
+        monster_list.push_back((*itS));
 }
 
 
@@ -276,4 +310,17 @@ void Chapter::setMxy(double x, double y)
 {
     _mx = x;
     _my = y;
+}
+
+
+void Chapter::slime_split(double x, double y, int lv, int pos, vector<MiniSlime> *list)
+{
+    int nextPos = pos + 1;
+    int deltaX = _road.getXlist()[nextPos] - _road.getXlist()[pos];
+    int deltaY = _road.getYlist()[nextPos] - _road.getYlist()[pos];
+
+    MiniSlime ms1("minislime", x + deltaX * 0.25, y + deltaY * 0.25, lv, pos);
+    MiniSlime ms2("minislime", x - deltaX * 0.25, y - deltaY * 0.25, lv, pos);
+    list->push_back(ms1);
+    list->push_back(ms2);
 }

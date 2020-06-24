@@ -9,11 +9,12 @@ Monster::Monster(string type, double x, double y, double st, int lv) : Object(ty
     this->_x = x;
     this->_y = y;
     this->_lv = lv;
+    this->_armor = 0;
     this->show_time = st;
     this->_alive = true;
-    this->_atk = _lv *  MATK;
     this->if_placed = false;
 }
+
 
 void Monster::move(Road r)
 {
@@ -23,8 +24,8 @@ void Monster::move(Road r)
             int nextPos = this->_pos + 1;
             int deltaX = r.getXlist()[nextPos] - r.getXlist()[this->_pos];
             int deltaY = r.getYlist()[nextPos] - r.getYlist()[this->_pos];
-            this->_x += mSPEED*deltaX;
-            this->_y += mSPEED*deltaY;
+            this->_x += _speed * deltaX;
+            this->_y += _speed * deltaY;
             if ( abs(this->_x - r.getXlist()[nextPos]) < 0.1  &&  abs(this->_y - r.getYlist()[nextPos]) < 0.1 ) this->_pos++;
         }
 }
@@ -45,4 +46,10 @@ void Monster::show(QPainter *painter)
         painter->resetTransform();
     }
 }
+
+void Monster::be_shooted(int damage)
+{
+    if (_armor > 0) _armor--;
+    else this->_hp -= damage;
+};
 

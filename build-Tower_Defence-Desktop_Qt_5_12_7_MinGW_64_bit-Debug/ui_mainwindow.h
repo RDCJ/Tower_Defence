@@ -10,12 +10,12 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -23,9 +23,6 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *menuChapter1;
-    QAction *menuChapter2;
-    QAction *menuChapter3;
     QWidget *centralwidget;
     QPushButton *chapter1;
     QPushButton *chapter2;
@@ -35,6 +32,8 @@ public:
     QPushButton *contin;
     QPushButton *back;
     QPushButton *restart;
+    QTextBrowser *textBrowser;
+    QTextBrowser *textBrowser_2;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -43,40 +42,54 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1040, 640);
         MainWindow->setMouseTracking(true);
-        menuChapter1 = new QAction(MainWindow);
-        menuChapter1->setObjectName(QString::fromUtf8("menuChapter1"));
-        menuChapter2 = new QAction(MainWindow);
-        menuChapter2->setObjectName(QString::fromUtf8("menuChapter2"));
-        menuChapter3 = new QAction(MainWindow);
-        menuChapter3->setObjectName(QString::fromUtf8("menuChapter3"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         chapter1 = new QPushButton(centralwidget);
         chapter1->setObjectName(QString::fromUtf8("chapter1"));
         chapter1->setGeometry(QRect(150, 200, 171, 111));
+        QFont font;
+        font.setPointSize(12);
+        chapter1->setFont(font);
+        chapter1->setCursor(QCursor(Qt::PointingHandCursor));
         chapter2 = new QPushButton(centralwidget);
         chapter2->setObjectName(QString::fromUtf8("chapter2"));
         chapter2->setGeometry(QRect(420, 200, 181, 111));
+        chapter2->setFont(font);
+        chapter2->setCursor(QCursor(Qt::PointingHandCursor));
         chapter3 = new QPushButton(centralwidget);
         chapter3->setObjectName(QString::fromUtf8("chapter3"));
         chapter3->setGeometry(QRect(700, 200, 181, 111));
+        chapter3->setFont(font);
+        chapter3->setCursor(QCursor(Qt::PointingHandCursor));
         pause = new QPushButton(centralwidget);
         pause->setObjectName(QString::fromUtf8("pause"));
-        pause->setGeometry(QRect(20, 20, 61, 41));
+        pause->setGeometry(QRect(10, 10, 41, 41));
+        pause->setCursor(QCursor(Qt::PointingHandCursor));
+        pause->setStyleSheet(QString::fromUtf8("border-image: url(:/image/pause.png);"));
         groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(340, 160, 351, 231));
+        groupBox->setGeometry(QRect(340, 150, 351, 231));
+        groupBox->setFont(font);
         groupBox->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);\n"
 "background-color: rgb(207, 207, 207);"));
         contin = new QPushButton(groupBox);
         contin->setObjectName(QString::fromUtf8("contin"));
         contin->setGeometry(QRect(130, 50, 101, 29));
+        contin->setCursor(QCursor(Qt::PointingHandCursor));
         back = new QPushButton(groupBox);
         back->setObjectName(QString::fromUtf8("back"));
         back->setGeometry(QRect(130, 170, 101, 29));
+        back->setCursor(QCursor(Qt::PointingHandCursor));
         restart = new QPushButton(groupBox);
         restart->setObjectName(QString::fromUtf8("restart"));
         restart->setGeometry(QRect(130, 110, 101, 29));
+        restart->setCursor(QCursor(Qt::PointingHandCursor));
+        textBrowser = new QTextBrowser(centralwidget);
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setGeometry(QRect(110, 400, 361, 111));
+        textBrowser_2 = new QTextBrowser(centralwidget);
+        textBrowser_2->setObjectName(QString::fromUtf8("textBrowser_2"));
+        textBrowser_2->setGeometry(QRect(550, 400, 391, 111));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -105,6 +118,12 @@ public:
         QObject::connect(back, SIGNAL(clicked()), chapter1, SLOT(show()));
         QObject::connect(back, SIGNAL(clicked()), chapter3, SLOT(show()));
         QObject::connect(back, SIGNAL(clicked()), chapter2, SLOT(show()));
+        QObject::connect(chapter1, SIGNAL(clicked()), textBrowser, SLOT(hide()));
+        QObject::connect(chapter2, SIGNAL(clicked()), textBrowser, SLOT(hide()));
+        QObject::connect(chapter3, SIGNAL(clicked()), textBrowser, SLOT(hide()));
+        QObject::connect(chapter1, SIGNAL(clicked()), textBrowser_2, SLOT(hide()));
+        QObject::connect(chapter2, SIGNAL(clicked()), textBrowser_2, SLOT(hide()));
+        QObject::connect(chapter3, SIGNAL(clicked()), textBrowser_2, SLOT(hide()));
 
         pause->setDefault(false);
 
@@ -115,17 +134,32 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        menuChapter1->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\345\205\263", nullptr));
-        menuChapter2->setText(QApplication::translate("MainWindow", "\347\254\254\344\272\214\345\205\263", nullptr));
-        menuChapter3->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\211\345\205\263", nullptr));
         chapter1->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\345\205\263", nullptr));
         chapter2->setText(QApplication::translate("MainWindow", "\347\254\254\344\272\214\345\205\263", nullptr));
         chapter3->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\211\345\205\263", nullptr));
-        pause->setText(QApplication::translate("MainWindow", "Pause", nullptr));
-        groupBox->setTitle(QApplication::translate("MainWindow", "\350\217\234\345\215\225", nullptr));
+        pause->setText(QString());
+        groupBox->setTitle(QApplication::translate("MainWindow", "             \350\217\234\345\215\225", nullptr));
         contin->setText(QApplication::translate("MainWindow", "\347\273\247\347\273\255\346\270\270\346\210\217", nullptr));
         back->setText(QApplication::translate("MainWindow", "\350\277\224\345\233\236", nullptr));
         restart->setText(QApplication::translate("MainWindow", "\351\207\215\346\226\260\345\274\200\345\247\213", nullptr));
+        textBrowser->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun';\">	      </span><span style=\" font-family:'SimSun'; font-size:11pt;\">\346\270\270\346\210\217\350\257\264\346\230\216</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun'; font-size:10pt;\">1.\346\224\276\347\275\256\351\230\262\345\276\241\345\241\224\357\274\214\346\212\265\345\276\241\350\277\233\346\224\273\347\232\204\346\200\252\347\211\251</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; ma"
+                        "rgin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun'; font-size:10pt;\">2.\345\210\251\347\224\250\345\207\273\346\235\200\346\200\252\347\211\251\350\216\267\345\276\227\347\232\204\351\207\221\351\222\261\345\215\207\347\272\247\351\230\262\345\276\241\345\241\224</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun'; font-size:10pt;\">3.\350\265\242\345\276\227\346\270\270\346\210\217\357\274\214 \350\216\267\345\276\227\347\247\257\345\210\206</span></p></body></html>", nullptr));
+        textBrowser_2->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun'; font-size:11pt;\">            \346\200\252\347\211\251\345\233\276\351\211\264</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun'; font-size:10pt;\">\350\231\261\350\231\253:\346\234\200\346\231\256\351\200\232\347\232\204\346\200\252\347\211\251</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Si"
+                        "mSun'; font-size:10pt;\">\345\217\262\350\216\261\345\247\206:\350\242\253\345\207\273\346\235\200\345\220\216\344\274\232\345\210\206\350\243\202\346\210\220\344\270\244\344\270\252\345\260\217\345\217\262\350\216\261\345\247\206</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'SimSun'; font-size:10pt;\">\345\244\247\351\242\232\350\231\253:\345\270\246\346\234\211\344\270\211\345\261\202\346\212\244\347\224\262\357\274\214\345\217\257\344\273\245\346\212\265\346\214\241\344\270\211\346\254\241\346\224\273\345\207\273</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

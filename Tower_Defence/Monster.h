@@ -14,9 +14,11 @@ class Monster : public Object
         bool alive() const {return _alive;};
         int getATK() const {return _atk;};
         double getST() const {return show_time;};
+        int getLv() const {return _lv;};
+        int getPos() const {return _pos;};
         bool ifPlaced() const {return if_placed;};
         void place() {if_placed = true;};
-        void be_shooted(int damage) {this->_hp -= damage;};
+        void be_shooted(int damage);
         void dead() {this->_alive = false;};
         void show(QPainter *painter);
         void move(Road r);
@@ -25,6 +27,8 @@ class Monster : public Object
         int _hp;
         int _pos;//记录怪物在Road序列中的位置
         int _atk;
+        int _armor;
+        double _speed;
         int _lv;
         bool _alive, if_placed;
         double show_time;

@@ -10,6 +10,8 @@
 class Tower : public Object
 {
     public:
+        static int base_atk;
+        static int lvup_atk;
         static double max_range;
         static int price;
         Tower(string type);

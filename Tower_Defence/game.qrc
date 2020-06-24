@@ -1,9 +1,12 @@
 <RCC>
     <qresource prefix="/image">
-        <file>raw map.png</file>
-        <file>Icon Set.png</file>
         <file>Harmmer.png</file>
         <file>mouse_Harmmer.png</file>
+        <file>pause.png</file>
+        <file>chapter1map.png</file>
+        <file>chapter2map.png</file>
+        <file>chapter3map.png</file>
+        <file>Icon Set.png</file>
     </qresource>
     <qresource prefix="/chapter">
         <file>Chapter1.ini</file>
