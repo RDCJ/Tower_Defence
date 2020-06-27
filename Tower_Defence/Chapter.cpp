@@ -11,6 +11,9 @@ Chapter::Chapter() : hd("headquarter"), _player()
     map_pic[0].load(":/image/chapter1map.png");
     map_pic[1].load(":/image/chapter2map.png");
     map_pic[2].load(":/image/chapter3map.png");
+    musiclist[0].setUrl("qrc:/music/funny.mp3");
+    musiclist[1].setUrl("qrc:/music/fighting2.mp3");
+    musiclist[2].setUrl("qrc:/music/fighting1.mp3");
     harmmer_pic.load(":/image/Harmmer.png");
     tower_pic.load(":/image/Icon Set.png");
     tower_pic = tower_pic.copy(QRect(4 * GS, 0 * GS, 2 * GS, 2 * GS));
@@ -21,23 +24,13 @@ Chapter::Chapter() : hd("headquarter"), _player()
 
 void Chapter::initChapter(int k)
 {
-    music->stop();
+    if (now_chapter != k)
+    {
+        music->stop();
+        music->setMedia(musiclist[k-1]);
+    }
+    music->play();
     now_chapter = k;
-    if (now_chapter == 1)
-    {
-         music->setMedia(QUrl("qrc:/music/funny.mp3"));
-         music->play();
-    }
-    else if (now_chapter == 2)
-    {
-         music->setMedia(QUrl("qrc:/music/fighting2.mp3"));
-         music->play();
-    }
-    else if (now_chapter == 3)
-    {
-         music->setMedia(QUrl("qrc:/music/fighting1.mp3"));
-         music->play();
-    }
     tower_list.clear();
     monster_list.clear();
 

@@ -11,7 +11,7 @@
 #include<time.h>
 #include<cmath>
 #include<QTextStream>
-
+#include<QUrl>
 #include "Object.h"
 #include "Monster.h"
 #include "Tower.h"
@@ -54,6 +54,7 @@ class Chapter
 
     protected:
         QMediaPlayer* music;
+        QUrl musiclist[3];
         QImage map_pic[3], tower_pic, harmmer_pic;//地图大小：13 * 8
         vector<Monster> monster_list;
         vector<Tower> tower_list;

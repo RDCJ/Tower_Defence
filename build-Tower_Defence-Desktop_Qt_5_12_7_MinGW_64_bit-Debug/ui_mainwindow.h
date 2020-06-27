@@ -86,6 +86,9 @@ public:
         restart->setObjectName(QString::fromUtf8("restart"));
         restart->setGeometry(QRect(130, 110, 101, 29));
         restart->setCursor(QCursor(Qt::PointingHandCursor));
+        restart->raise();
+        contin->raise();
+        back->raise();
         textBrowser = new QTextBrowser(centralwidget);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
         textBrowser->setGeometry(QRect(110, 400, 361, 111));
@@ -94,12 +97,12 @@ public:
         textBrowser_2->setGeometry(QRect(550, 400, 451, 141));
         re = new QPushButton(centralwidget);
         re->setObjectName(QString::fromUtf8("re"));
-        re->setGeometry(QRect(420, 200, 181, 111));
+        re->setGeometry(QRect(720, 70, 181, 111));
         re->setFont(font);
         re->setCursor(QCursor(Qt::PointingHandCursor));
         next = new QPushButton(centralwidget);
         next->setObjectName(QString::fromUtf8("next"));
-        next->setGeometry(QRect(420, 200, 181, 111));
+        next->setGeometry(QRect(840, 290, 181, 111));
         next->setFont(font);
         next->setCursor(QCursor(Qt::PointingHandCursor));
         MainWindow->setCentralWidget(centralwidget);

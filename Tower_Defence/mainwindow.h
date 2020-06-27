@@ -48,6 +48,7 @@ class MainWindow : public QMainWindow
             void on_restart_clicked();
 
             void on_back_clicked();
+
             void on_next_clicked();
 
             void on_re_clicked();
