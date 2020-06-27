@@ -13,4 +13,12 @@
         <file>Chapter2.ini</file>
         <file>Chapter3.ini</file>
     </qresource>
+    <qresource prefix="/music">
+        <file>fighting1.mp3</file>
+        <file>funny.mp3</file>
+        <file>relaxing.mp3</file>
+        <file>fail.mp3</file>
+        <file>fighting2.mp3</file>
+        <file>success.mp3</file>
+    </qresource>
 </RCC>

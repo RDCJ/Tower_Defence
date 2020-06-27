@@ -31,4 +31,6 @@ int main(int argc, char *argv[])
 7. 更丰富的防御塔
 8. 更丰富的怪物(finished)
 9. 显示防御塔的攻击范围(finished)
+10.修改关卡，难度
+11.添加音乐
 */

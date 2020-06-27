@@ -22,12 +22,14 @@ class Monster : public Object
         void dead() {this->_alive = false;};
         void show(QPainter *painter);
         void move(Road r);
+        void adjustPos(double x, double y, int pos);
+        void setPos(double x, double y, int pos);
 
     protected:
         int _hp;
         int _pos;//记录怪物在Road序列中的位置
         int _atk;
-        int _armor;
+        int _armor, _shield;
         double _speed;
         int _lv;
         bool _alive, if_placed;

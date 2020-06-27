@@ -1,12 +1,15 @@
 #ifndef CHAPTER_H
 #define CHAPTER_H
+#include<QMediaPlayer>
+#include<QMediaPlaylist>
 #include<QPainter>
 #include<QFile>
 #include<string>
 #include<vector>
 #include<iostream>
 #include<fstream>
-#include <time.h>
+#include<time.h>
+#include<cmath>
 #include<QTextStream>
 
 #include "Object.h"
@@ -34,6 +37,7 @@ class Chapter
         void GamingScreen(QPainter *painter, bool mouse_flag, double mx, double my);
         void GameOver(QPainter *painter);
         void Success(QPainter *painter);
+        void drawSales(QPainter *painter);
         void showTowerRange(QPainter *painter);
         int getStatus() const {return _status;};
         void place_monster();
@@ -47,9 +51,9 @@ class Chapter
         void check_status();
         void delay(double time);
         void setMxy(double x, double y);
-        void slime_split(double x, double y, int lv, int pos, vector<MiniSlime> * list);
 
     protected:
+        QMediaPlayer* music;
         QImage map_pic[3], tower_pic, harmmer_pic;//地图大小：13 * 8
         vector<Monster> monster_list;
         vector<Tower> tower_list;

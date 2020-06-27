@@ -2,14 +2,14 @@
 
 Headquarter::Headquarter(string type) : Object(type), _hpBar()
 {
-    this->_hp = 100;
+    _hp = 100;
 }
 
 void Headquarter::init_hd(double x, double y)
 {
     _x = x;
     _y = y;
-    this->_hp = 100;
+    _hp = 100;
 }
 
 void Headquarter::show(QPainter *painter)

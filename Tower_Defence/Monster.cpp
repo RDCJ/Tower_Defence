@@ -1,6 +1,5 @@
 #include "Monster.h"
 #include <cmath>
-double Monster::mSPEED = MONSTER_SPEED;
 
 Monster::Monster(string type, double x, double y, double st, int lv) : Object(type), _hpBar()
 {
@@ -9,7 +8,7 @@ Monster::Monster(string type, double x, double y, double st, int lv) : Object(ty
     this->_x = x;
     this->_y = y;
     this->_lv = lv;
-    this->_armor = 0;
+    this->_shield = 0;
     this->show_time = st;
     this->_alive = true;
     this->if_placed = false;
@@ -26,9 +25,10 @@ void Monster::move(Road r)
             int deltaY = r.getYlist()[nextPos] - r.getYlist()[this->_pos];
             this->_x += _speed * deltaX;
             this->_y += _speed * deltaY;
-            if ( abs(this->_x - r.getXlist()[nextPos]) < 0.1  &&  abs(this->_y - r.getYlist()[nextPos]) < 0.1 ) this->_pos++;
+            adjustPos(r.getXlist()[nextPos], r.getYlist()[nextPos], nextPos);
         }
 }
+
 
 void Monster::show(QPainter *painter)
 {
@@ -39,7 +39,7 @@ void Monster::show(QPainter *painter)
         _hpBar.show(painter, _hp, _x, _y);
 
         QString LV = "Lv." + QString::number(_lv);
-        QFont font("Courier", 8, QFont::DemiBold);
+        QFont font("Microsoft YaHei", 8, QFont::DemiBold);
 
         painter->setFont(font);
         painter->drawText(_x * GS + 5, _y * GS - 5, LV);
@@ -47,9 +47,23 @@ void Monster::show(QPainter *painter)
     }
 }
 
+
 void Monster::be_shooted(int damage)
 {
-    if (_armor > 0) _armor--;
-    else this->_hp -= damage;
-};
+    if (_shield > 0) _shield--;
+    else if (damage >= _armor) _hp = _hp - (damage - _armor);
+}
 
+
+void Monster::adjustPos(double x, double y, int pos)
+{
+      if ( abs(this->_x - x) < 0.2  &&  abs(this->_y - y) < 0.2 ) this->_pos = pos;
+}
+
+
+void Monster::setPos(double x, double y, int pos)
+{
+    _x = x;
+    _y = y;
+    _pos = pos;
+}

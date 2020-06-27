@@ -9,6 +9,8 @@ class BigMouth : public Monster
         static int lvup_atk;
         static double base_speed;
         static double lvup_speed;
+        static int base_armor;
+        static int lvup_armor;
         BigMouth(string type, double x, double y, double st, int lv);
 };
 #endif // BIGMOUTH_H

@@ -18,6 +18,7 @@ class Tower : public Object
         Monster * getTarget() const {return _target;};
         void set_target(Monster * t);
         int getATK() const {return _atk;};
+        int getLv() const {return _lv;};
         vector<Bullet> * getBlist() {return &this->bullet_list;};
         void show(QPainter *painter);
         void shoot();

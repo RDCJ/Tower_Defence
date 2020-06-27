@@ -9,6 +9,8 @@ class Worm : public Monster
         static int lvup_atk;
         static double base_speed;
         static double lvup_speed;
+        static int base_armor;
+        static int lvup_armor;
         Worm(string type, double x, double y, double st, int lv);
 };
 #endif // WORM_H

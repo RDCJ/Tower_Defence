@@ -106,7 +106,7 @@
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>150</y>
+      <y>130</y>
       <width>351</width>
       <height>231</height>
      </rect>
@@ -189,7 +189,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun';&quot;&gt;	      &lt;/span&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:11pt;&quot;&gt;游戏说明&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;1.放置防御塔，抵御进攻的怪物&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;2.利用击杀怪物获得的金钱升级防御塔&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;3.赢得游戏， 获得积分&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;3.赢得游戏, 获得积分&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_2">
@@ -197,8 +197,8 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>550</x>
       <y>400</y>
-      <width>391</width>
-      <height>111</height>
+      <width>451</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="html">
@@ -207,11 +207,62 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:11pt;&quot;&gt;            怪物图鉴&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;虱虫:最普通的怪物&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;史莱姆:被击杀后会分裂成两个小史莱姆&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;虱虫:最普通的怪物，移动速度较快&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;史莱姆:被击杀后会分裂成两个小史莱姆，移动速度较慢&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'SimSun'; font-size:10pt;&quot;&gt;大颚虫:带有三层护甲，可以抵挡三次攻击&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="re">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>200</y>
+      <width>181</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>重新开始</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="next">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>200</y>
+      <width>181</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>下一关</string>
+    </property>
+   </widget>
+   <zorder>chapter1</zorder>
+   <zorder>chapter2</zorder>
+   <zorder>chapter3</zorder>
+   <zorder>pause</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>textBrowser</zorder>
+   <zorder>textBrowser_2</zorder>
+   <zorder>next</zorder>
+   <zorder>re</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
@@ -662,6 +713,38 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>775</x>
      <y>455</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>next</sender>
+   <signal>clicked()</signal>
+   <receiver>next</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>re</sender>
+   <signal>clicked()</signal>
+   <receiver>re</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>651</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>716</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>

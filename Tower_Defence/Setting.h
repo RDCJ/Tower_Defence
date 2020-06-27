@@ -5,7 +5,8 @@
 extern int WIN_HEIGHT;
 extern int WIN_WIDTH;
 extern int TOWER_PRICE;
-extern int LVLUP_PRICE;
+extern int LVLUP_PRICE_BASE;
+extern int LVLUP_PRICE_LVUP;
 extern int TATK;
 extern int MATK;
 extern double MONSTER_SPEED;

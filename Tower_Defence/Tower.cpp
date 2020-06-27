@@ -5,15 +5,16 @@ using namespace std;
 double Tower::max_range = TOWER_RANGE;
 int Tower::price = TOWER_PRICE;
 int Tower::base_atk = 10;
-int Tower::lvup_atk = 5
-        ;
+int Tower::lvup_atk = 5;
+
 Tower::Tower(string type) : Object(type)
 {
     this->_target = NULL;
     _angle = 0;
     _lv = 1;
-    _atk = _lv * TATK;
+    _atk = Tower::base_atk + (_lv-1) * Tower::lvup_atk;
 }
+
 
 void Tower::set_target(Monster * t)
 {
@@ -21,13 +22,14 @@ void Tower::set_target(Monster * t)
     if (t != NULL) this->_start = clock();
 }
 
+
 void Tower::show(QPainter *painter)
 {
     double deltaX, deltaY;
     if (this->getTarget() != NULL)//更新角度
     {
-        deltaX = (*this->_target).getX() - this->getX();
-        deltaY = (*this->_target).getY() - this->getY();
+        deltaX = this->_target->getX() - this->getX();
+        deltaY = this->_target->getY() - this->getY();
         this->_angle = atan( deltaY/deltaX ) * 180 / 3.1415 + 90;
         if (deltaX < 0) this->_angle += 180;
     }
@@ -49,7 +51,7 @@ void Tower::show(QPainter *painter)
     painter->drawText(_x * GS + 5, _y * GS - 5, LV);
     painter->resetTransform();
 
-    for (vector<Bullet>::iterator it = bullet_list.begin(); it != bullet_list.end(); it++) (*it).show(painter);
+    for (vector<Bullet>::iterator it = bullet_list.begin(); it != bullet_list.end(); it++) it->show(painter);
 
 }
 

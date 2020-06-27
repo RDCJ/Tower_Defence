@@ -7,6 +7,7 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , _chapter()
 {
     ui->setupUi(this);
     this->centralWidget()->setMouseTracking(true);
@@ -16,8 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
     ifPause = false;
     ui->pause->setHidden(true);
     ui->groupBox->setHidden(true);
+    ui->next->setHidden(true);
+    ui->re->setHidden(true);
     this->timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
+    connect(this, SIGNAL(succ()), ui->next, SLOT(show()));
+    connect(this, SIGNAL(fail()), ui->re, SLOT(show()));
+    music = new QMediaPlayer;
+    music->setMedia(QUrl("qrc:/music/relaxing.mp3"));
+    music->setVolume(30);
+    music->play();
 }
 
 MainWindow::~MainWindow()
@@ -37,7 +46,7 @@ void MainWindow::paintEvent(QPaintEvent *)
 
 void MainWindow::move()
 {
-    if (ifPause == false)
+    if (ifPause == false && _chapter.getStatus() == 2)
     {
         _chapter.place_monster();
         _chapter.monster_move();
@@ -47,6 +56,8 @@ void MainWindow::move()
         _chapter.check_monster();
         _chapter.check_status();
     }
+    if (_chapter.getStatus() == 1) emit succ();
+    if (_chapter.getStatus() == -1) emit fail();
     this->repaint();
 }
 
@@ -109,6 +120,7 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::chapter_start(int k)
 {
+    music->stop();
     nowChapter = k;
     this->_chapter.initChapter(k);
     timer->start(100);
@@ -152,4 +164,14 @@ void MainWindow::on_back_clicked()
 {
     this->ifPause = false;
     timer->stop();
+}
+
+void MainWindow::on_next_clicked()
+{
+    if (nowChapter < 3) chapter_start(nowChapter + 1);
+}
+
+void MainWindow::on_re_clicked()
+{
+    chapter_start(nowChapter);
 }

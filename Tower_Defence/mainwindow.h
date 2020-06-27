@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QMediaPlayer>
 #include <iostream>
 #include "Chapter.h"
 #include "Object.h"
@@ -47,13 +48,21 @@ class MainWindow : public QMainWindow
             void on_restart_clicked();
 
             void on_back_clicked();
+            void on_next_clicked();
 
-private:
-        Ui::MainWindow *ui;
-        Chapter _chapter;
-        QTimer *timer;
-        bool creatTower, lvlupTower, ifPause;
-        double mouse_x, mouse_y, drag_x, drag_y;
-        int nowChapter;
+            void on_re_clicked();
+
+signals:
+            void succ();
+            void fail();
+
+    private:
+            QMediaPlayer* music;
+            Ui::MainWindow *ui;
+            Chapter _chapter;
+            QTimer *timer;
+            bool creatTower, lvlupTower, ifPause;
+            double mouse_x, mouse_y, drag_x, drag_y;
+            int nowChapter;
 };
 #endif // MAINWINDOW_H
