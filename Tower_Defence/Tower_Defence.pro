@@ -65,7 +65,9 @@ DISTFILES += \
     Icon Set.png \
     Icon Set.png \
     Icon Set.png \
-    changelog_1.txt
+    changelog_1.txt \
+    changelog_2.txt \
+    uml.png
 
 RESOURCES += \
     game.qrc
